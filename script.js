@@ -1,5 +1,11 @@
 function toggleMenu() {
-    const menu = document.getElementById('side-menu');
-    // Eğer 'active' sınıfı varsa sil, yoksa ekle
-    menu.classList.toggle('active');
+    document.getElementById('side-menu').classList.toggle('active');
+}
+
+// Ürün eklendiğinde sayaç artar
+let count = 0;
+function addToCart() {
+    count++;
+    document.getElementById('cart-count').innerText = count;
+    alert("Ürün sepetinize eklendi.");
 }
