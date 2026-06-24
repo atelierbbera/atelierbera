@@ -1,18 +1,21 @@
 body { background-color: #fdfaf6; color: #5a4a42; font-family: sans-serif; margin: 0; }
-.top-bar { background: #7b241c; color: white; text-align: center; padding: 10px; }
+.top-bar { background: #7b241c; color: white; text-align: center; padding: 10px; font-size: 14px; }
 
-/* Header düzeni */
-.main-header { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-.header-top { display: flex; justify-content: space-between; width: 100%; align-items: center; }
-
-/* Hamburger ve Sepet */
-.menu-btn { font-size: 24px; cursor: pointer; }
-.cart-icon { font-size: 18px; cursor: pointer; font-weight: bold; }
-
-/* Logo ortalama */
-.logo-area { text-align: center; margin-top: -20px; }
+.header-top { display: flex; justify-content: space-between; padding: 20px; align-items: center; }
+.menu-btn { background: none; border: none; font-size: 24px; cursor: pointer; }
+.logo-area { text-align: center; margin-top: -40px; }
 .logo-area h1 { color: #7b241c; letter-spacing: 4px; margin: 0; }
 
-/* Menü gizleme */
-.side-menu { display: none; background: white; padding: 20px; border: 1px solid #ddd; width: 200px; position: absolute; left: 0; }
-.side-menu.active { display: block; }
+/* MENÜYÜ GİZLEME VE ŞEKİLLENDİRME */
+.side-menu { 
+    display: none; /* Başlangıçta gizli! */
+    background: white; 
+    width: 250px; 
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    position: absolute; 
+    z-index: 100;
+}
+.side-menu.active { display: block; } /* Tıklanınca açılır */
+.side-menu ul { list-style: none; padding: 0; }
+.side-menu ul li { padding: 10px 0; border-bottom: 1px solid #eee; }
