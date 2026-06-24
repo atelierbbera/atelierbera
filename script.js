@@ -9,3 +9,6 @@ function addToCart() {
 document.getElementById('mobile-menu').addEventListener('click', () => {
     document.querySelector('.nav-links').classList.toggle('active');
 });
+function toggleMenu() {
+    document.getElementById('side-menu').classList.toggle('active');
+}
