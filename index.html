@@ -1,56 +1,37 @@
-<!-- Üst Şerit -->
-<div class="top-bar">1500₺ üzeri alışverişlerde ücretsiz kargo!</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">1500₺ Üzeri Ücretsiz Kargo</div>
+    
+    <header class="main-header">
+        <div class="menu-container">
+            <div class="menu-btn" onclick="toggleMenu()">☰</div>
+            <div class="cart">Sepet (0)</div>
+        </div>
+        <div class="logo-area">
+            <h1>ATELİER BERA</h1>
+            <p>Handmade Candles</p>
+        </div>
+    </header>
 
-<!-- Header -->
-<header class="main-header">
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <div class="logo-area">
-        <h1>ATELİER BERA</h1>
-        <p>Handmade Candles</p>
-    </div>
-</header>
-
-<!-- Gizli Menü -->
-<nav id="side-menu" class="side-menu">
-    <details>
-        <summary>Bardak Ve Kavanoz Mumlar</summary>
+    <nav id="side-menu" class="side-menu">
         <ul>
-            <li><a href="#">Bardak Mumlar</a></li>
-            <li>
-                <details>
-                    <summary>Kavanoz Mumlar</summary>
-                    <ul>
-                        <li><a href="#">Reçel Serisi</a></li>
-                        <li><a href="#">Aromaterapi Serisi</a></li>
-                    </ul>
-                </details>
-            </li>
+            <li><details><summary>Bardak Ve Kavanoz Mumlar</summary>
+                <ul><li>Bardak Mumlar</li><li><details><summary>Kavanoz Mumlar</summary>
+                    <ul><li>Reçel Serisi</li><li>Aromaterapi Serisi</li></ul></details></li></ul></details></li>
+            <li>Teneke Mumlar</li><li>Motif Mumlar</li><li>Hakkımızda</li><li>İletişim</li>
         </ul>
-    </details>
-</nav>
-<div class="top-bar">1500₺ Üzeri Ücretsiz Kargo</div>
+    </nav>
 
-<header class="header-container">
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <div class="logo-area">
-        <h1>ATELİER BERA</h1>
-        <p>Handmade Candles</p>
-    </div>
-    <div class="cart">Sepet (0)</div>
-</header>
-
-<nav id="side-menu" class="side-menu">
-    <ul>
-        <li><details><summary>Bardak Ve Kavanoz Mumlar</summary>
-            <ul><li>Bardak Mumlar</li><li><details><summary>Kavanoz Mumlar</summary>
-                <ul><li>Reçel Serisi</li><li>Aromaterapi Serisi</li></ul></details></li></ul></details></li>
-        <li>Teneke Mumlar</li><li>Motif Mumlar</li><li>Hakkımızda</li><li>İletişim</li>
-    </ul>
-</nav>
-
-<main>
-    <h2>Reçel Serisi</h2>
-    <div class="product-grid" id="product-list">
-        <!-- JS ile ürünler buraya gelecek -->
-    </div>
-</main>
+    <main>
+        <h2>Reçel Serisi</h2>
+        <div class="product-grid" id="product-list">
+            <!-- Ürünler buraya eklenecek -->
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
