@@ -1,6 +1,0 @@
-body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; }
-.navbar { display: flex; justify-content: space-between; padding: 20px; background: #fdfaf6; }
-.submenu { display: none; list-style: none; padding-left: 20px; }
-.dropdown:hover .submenu { display: block; }
-.hero { height: 300px; display: flex; align-items: center; justify-content: center; background: #e8dcc4; color: #5a4a42; }
-.menu-toggle { font-size: 24px; cursor: pointer; }
