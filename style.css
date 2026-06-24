@@ -10,3 +10,24 @@
 /* Menü */
 .side-menu { display: none; padding: 20px; border-top: 1px solid #ccc; }
 .side-menu.active { display: block; }
+:root {
+    --bg-color: #fdfaf6; /* Bej */
+    --accent-color: #7b241c; /* Vişne çürüğü */
+    --text-color: #5a4a42; /* Kahve tonu */
+}
+
+body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; }
+
+.top-bar { background-color: var(--accent-color); color: white; text-align: center; padding: 10px; font-size: 14px; }
+
+.header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+
+.logo-area { text-align: center; flex-grow: 1; }
+.logo-area h1 { font-size: 28px; letter-spacing: 4px; margin: 0; }
+.logo-area p { font-size: 12px; font-style: italic; margin: 0; color: #888; }
+
+.side-menu { display: none; position: absolute; left: 0; top: 120px; background: white; width: 250px; padding: 20px; border: 1px solid #ddd; }
+.side-menu.active { display: block; }
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; padding: 20px; }
+.product-card { border: 1px solid #ddd; padding: 10px; text-align: center; }
