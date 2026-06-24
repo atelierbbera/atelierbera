@@ -1,21 +1,9 @@
-.top-bar { background: #7b241c; color: #fff; text-align: center; padding: 5px; }
-header { display: flex; align-items: center; justify-content: space-between; padding: 20px; }
-.logo { text-align: center; flex-grow: 1; color: #7b241c; }
-.menu-icon, .cart-icon { cursor: pointer; color: #7b241c; font-weight: bold; }
-.hidden { display: none; }
-nav { background: #fdfaf6; padding: 20px; border: 1px solid #ddd; }
-nav summary { color: #7b241c; cursor: pointer; }
-.hero { text-align: center; padding: 50px; font-style: italic; }
-root { --accent-color: #7b241c; }
-body { background: #fdfaf6; color: #5a4a42; font-family: sans-serif; margin: 0; }
-.top-bar { background: var(--accent-color); color: #fff; text-align: center; padding: 10px; }
-.main-header { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-.header-top { display: flex; justify-content: space-between; width: 100%; align-items: center; }
-.menu-btn { background: none; border: none; font-size: 24px; color: var(--accent-color); cursor: pointer; }
-.logo-area { text-align: center; }
-.logo-area h1 { color: var(--accent-color); letter-spacing: 4px; margin: 0; }
+:root { --accent-color: #7b241c; }
+.section-center { text-align: center; max-width: 600px; margin: 20px auto; color: var(--accent-color); }
+.section-center h3 { font-size: 1.2rem; }
+.section-center p { font-size: 0.9rem; }
 
-/* MENÜ GİZLEME */
-.side-menu { display: none; background: #fff; width: 250px; border: 1px solid #ddd; padding: 20px; position: absolute; left: 0; }
+/* Menü Butonu ve Açılır Menü */
+.side-menu { display: none; background: #fff; width: 250px; padding: 20px; border: 1px solid #ddd; position: absolute; left: 0; }
 .side-menu.active { display: block; }
-.side-menu summary { color: var(--accent-color); cursor: pointer; }
+.menu-btn { background: none; border: none; font-size: 24px; color: var(--accent-color); cursor: pointer; }
