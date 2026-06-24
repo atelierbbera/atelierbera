@@ -19,3 +19,15 @@
 /* Menü detayı */
 summary { cursor: pointer; font-weight: bold; padding: 10px 0; }
 ul ul { padding-left: 20px; list-style: none; }
+/* Genel */
+.top-bar { background: #5a4a42; color: #fff; text-align: center; padding: 5px; font-size: 12px; }
+
+/* Başlık */
+.main-header { text-align: center; padding: 20px; position: relative; }
+.menu-btn { position: absolute; left: 20px; top: 20px; font-size: 24px; cursor: pointer; }
+.logo-area h1 { margin: 0; letter-spacing: 3px; }
+.logo-area p { margin: 0; font-size: 14px; font-style: italic; color: #888; }
+
+/* Menü */
+.side-menu { display: none; padding: 20px; border-top: 1px solid #ccc; }
+.side-menu.active { display: block; }
