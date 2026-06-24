@@ -1,34 +1,55 @@
-<div class="top-bar">1500₺ Üzeri Ücretsiz Kargo</div>
-<header>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-    <div class="logo">
-        <h1>ATELİER BERA</h1>
-        <p><i>Handmade Candles</i></p>
-    </div>
-    <div class="cart-icon">🛒 Sepet (<span id="cart-count">0</span>)</div>
-</header>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">1500₺ Üzeri Ücretsiz Kargo</div>
+    
+    <header class="main-header">
+        <div class="header-top">
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            <div class="cart-icon">🛒 Sepet (<span id="cart-count">0</span>)</div>
+        </div>
+        <div class="logo-area">
+            <h1>ATELİER BERA</h1>
+            <p><i>Handmade Candles</i></p>
+        </div>
+    </header>
 
-<nav id="menu" class="hidden">
-    <ul>
-        <li>
-            <details>
-                <summary>Bardak Ve Kavanoz Mumlar</summary>
-                <ul>
-                    <li>Bardak Mumlar</li>
-                    <li><details><summary>Kavanoz Mumlar</summary>
-                        <ul><li>Reçel Serisi</li><li>Aromaterapi Serisi</li></ul>
-                    </details></li>
-                </ul>
-            </details>
-        </li>
-        <li>Teneke Mumlar</li>
-        <li>Motif Mumlar</li>
-        <li>Hakkımızda</li>
-        <li>İletişim</li>
-    </ul>
-</nav>
+    <nav id="side-menu" class="side-menu">
+        <ul>
+            <li>
+                <details>
+                    <summary>Bardak Ve Kavanoz Mumlar</summary>
+                    <ul>
+                        <li>Bardak Mumlar</li>
+                        <li><details><summary>Kavanoz Mumlar</summary>
+                            <ul><li>Reçel Serisi</li><li>Aromaterapi Serisi</li></ul>
+                        </details></li>
+                    </ul>
+                </details>
+            </li>
+            <li>Teneke Mumlar</li>
+            <li>Motif Mumlar</li>
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+    </nav>
 
-<main>
-    <section class="hero"><h2>Atölyeden evinize sevgiyle</h2></section>
-    <!-- Ürünler buraya eklenecek -->
-</main>
+    <main id="main-content">
+        <section class="hero"><h2>Atölyeden evinize sevgiyle</h2></section>
+        <div id="hakkimizda" class="section">
+            <h2>Hakkımızda</h2>
+            <p>AtelierBera, 2025 yılında özenle tasarlanmış el yapımı mum koleksiyonları sunmak için kuruldu. Doğal içerikler ve sade tasarım anlayışıyla yaşam alanlarınıza sıcak ve zarif bir dokunuş katmayı amaçlar.</p>
+        </div>
+        <div id="iletisim" class="section">
+            <h2>İletişim</h2>
+            <p>Email: info.atelierbera@gmail.com | Instagram: @atelierbera | Silivri/İstanbul</p>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
