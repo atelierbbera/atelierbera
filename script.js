@@ -1,11 +1,14 @@
 function addToCart(productName) {
     alert(productName + " ürün sepetinize eklendi!");
+function toggleMenu() {
+    document.getElementById('side-menu').classList.toggle('active');
 }
-.top-bar { background: #7b241c; color: #fff; text-align: center; padding: 5px; }
-header { display: flex; align-items: center; justify-content: space-between; padding: 20px; }
-.logo { text-align: center; flex-grow: 1; color: #7b241c; }
-.menu-icon, .cart-icon { cursor: pointer; color: #7b241c; font-weight: bold; }
-.hidden { display: none; }
-nav { background: #fdfaf6; padding: 20px; border: 1px solid #ddd; }
-nav summary { color: #7b241c; cursor: pointer; }
-.hero { text-align: center; padding: 50px; font-style: italic; }
+
+let count = 0;
+function addToCart() {
+    count++;
+    document.getElementById('cart-count').innerText = count;
+    alert("Ürün sepetinize eklendi! Lütfen adres bilgilerinizi girin.");
+    let address = prompt("İl / İlçe / Açık Adres giriniz:");
+    if(address) alert("Adresiniz kaydedildi, ödeme sayfasına yönlendiriliyorsunuz.");
+}
