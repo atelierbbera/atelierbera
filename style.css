@@ -1,51 +1,10 @@
-body { background-color: #fdfaf6; color: #5a4a42; font-family: sans-serif; margin: 0; }
-.top-bar { background: #7b241c; color: white; text-align: center; padding: 10px; font-size: 14px; }
+/* Menü ve Link Renkleri - Bordo */
+.side-menu a, .side-menu summary { color: #7b241c !important; text-decoration: none; }
 
-.header-top { display: flex; justify-content: space-between; padding: 20px; align-items: center; }
-.menu-btn { background: none; border: none; font-size: 24px; cursor: pointer; }
-.logo-area { text-align: center; margin-top: -40px; }
-.logo-area h1 { color: #7b241c; letter-spacing: 4px; margin: 0; }
-
-/* MENÜYÜ GİZLEME VE ŞEKİLLENDİRME */
-.side-menu { 
-    display: none; /* Başlangıçta gizli! */
-    background: white; 
-    width: 250px; 
-    padding: 20px; 
-    border: 1px solid #ddd; 
-    position: absolute; 
-    z-index: 100;
-}
-.side-menu.active { display: block; } /* Tıklanınca açılır */
-.side-menu ul { list-style: none; padding: 0; }
-.side-menu ul li { padding: 10px 0; border-bottom: 1px solid #eee; }
-.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
-.product-card { border: 1px solid #ddd; padding: 15px; text-align: center; background: #fff; }
-.placeholder-img { height: 120px; background: #e8dcc4; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-button { background: #7b241c; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; }
-/* Ana renk tanımları */
-:root { --accent-color: #7b241c; }
-
-/* Menü Linkleri ve Başlıklar */
-.side-menu a, .side-menu summary { 
-    color: var(--accent-color); 
-    text-decoration: none; 
-    font-weight: 500; 
-    cursor: pointer;
-}
-
-/* Alt menüleri içeri iterek hiyerarşi oluşturma */
-.submenu { padding-left: 20px; list-style: none; }
-.submenu-deep { padding-left: 20px; list-style: none; }
-
-/* Menü genel görünümü */
-.side-menu { 
-    display: none; 
-    background: #fdfaf6; 
-    width: 280px; 
-    padding: 20px; 
-    border: 1px solid #ddd; 
-    position: absolute; 
-    z-index: 100;
-}
+/* Menü Gizleme */
+.side-menu { display: none; position: absolute; background: #fdfaf6; padding: 20px; border: 1px solid #ddd; }
 .side-menu.active { display: block; }
+
+/* İndirimli Ürün Görünümü */
+.price-tag { color: #7b241c; font-weight: bold; }
+.old-price { text-decoration: line-through; color: #888; font-size: 12px; }
