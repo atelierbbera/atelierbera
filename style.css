@@ -1,25 +1,21 @@
-/* Üst Şerit */
-.top-bar { 
-    background: #5a4a42; color: white; text-align: center; 
-    padding: 5px; font-size: 12px; 
+.product-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 20px; 
+    padding: 20px; 
 }
 
-/* Başlık Ortalaması */
-.navbar { 
-    display: flex; justify-content: space-between; align-items: center; 
-    padding: 15px 20px; background: #fff; 
+.product-card { 
+    border: 1px solid #eee; 
+    padding: 15px; 
+    text-align: center; 
+    background: #fff;
+    transition: transform 0.2s;
 }
 
-.brand-title { 
-    font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #5a4a42; 
-}
+.product-card h3 { font-size: 1.1rem; margin: 10px 0; }
+.price { font-weight: bold; color: #5a4a42; margin-bottom: 15px; }
 
-/* Menü gizleme/gösterme */
-.nav-links { display: none; list-style: none; padding: 20px; background: #fdfaf6; }
-.nav-links.active { display: block; }
-.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
-.product-card { border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px; }
-.product-card button { background: #5a4a42; color: #fff; border: none; padding: 10px; cursor: pointer; }
-.collection-box { background: #fdfaf6; padding: 20px; border: 1px solid #e8dcc4; margin: 20px 0; }
-select { margin: 5px; padding: 5px; }
-h2 { text-align: center; color: #5a4a42; margin-top: 30px; }
+/* Menü detayı */
+summary { cursor: pointer; font-weight: bold; padding: 10px 0; }
+ul ul { padding-left: 20px; list-style: none; }
