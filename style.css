@@ -23,3 +23,29 @@ body { background-color: #fdfaf6; color: #5a4a42; font-family: sans-serif; margi
 .product-card { border: 1px solid #ddd; padding: 15px; text-align: center; background: #fff; }
 .placeholder-img { height: 120px; background: #e8dcc4; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
 button { background: #7b241c; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; }
+/* Ana renk tanımları */
+:root { --accent-color: #7b241c; }
+
+/* Menü Linkleri ve Başlıklar */
+.side-menu a, .side-menu summary { 
+    color: var(--accent-color); 
+    text-decoration: none; 
+    font-weight: 500; 
+    cursor: pointer;
+}
+
+/* Alt menüleri içeri iterek hiyerarşi oluşturma */
+.submenu { padding-left: 20px; list-style: none; }
+.submenu-deep { padding-left: 20px; list-style: none; }
+
+/* Menü genel görünümü */
+.side-menu { 
+    display: none; 
+    background: #fdfaf6; 
+    width: 280px; 
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    position: absolute; 
+    z-index: 100;
+}
+.side-menu.active { display: block; }
