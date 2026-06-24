@@ -19,3 +19,7 @@ body { background-color: #fdfaf6; color: #5a4a42; font-family: sans-serif; margi
 .side-menu.active { display: block; } /* Tıklanınca açılır */
 .side-menu ul { list-style: none; padding: 0; }
 .side-menu ul li { padding: 10px 0; border-bottom: 1px solid #eee; }
+.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
+.product-card { border: 1px solid #ddd; padding: 15px; text-align: center; background: #fff; }
+.placeholder-img { height: 120px; background: #e8dcc4; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+button { background: #7b241c; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; }
