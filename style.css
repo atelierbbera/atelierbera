@@ -1,10 +1,8 @@
-/* Menü ve Link Renkleri - Bordo */
-.side-menu a, .side-menu summary { color: #7b241c !important; text-decoration: none; }
-
-/* Menü Gizleme */
-.side-menu { display: none; position: absolute; background: #fdfaf6; padding: 20px; border: 1px solid #ddd; }
-.side-menu.active { display: block; }
-
-/* İndirimli Ürün Görünümü */
-.price-tag { color: #7b241c; font-weight: bold; }
-.old-price { text-decoration: line-through; color: #888; font-size: 12px; }
+.top-bar { background: #7b241c; color: #fff; text-align: center; padding: 5px; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 20px; }
+.logo { text-align: center; flex-grow: 1; color: #7b241c; }
+.menu-icon, .cart-icon { cursor: pointer; color: #7b241c; font-weight: bold; }
+.hidden { display: none; }
+nav { background: #fdfaf6; padding: 20px; border: 1px solid #ddd; }
+nav summary { color: #7b241c; cursor: pointer; }
+.hero { text-align: center; padding: 50px; font-style: italic; }
