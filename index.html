@@ -30,7 +30,36 @@
 
     <main class="content">
         </main>
+<main class="content">
+    <!-- Reçel Serisi -->
+    <h2>Reçel Serisi</h2>
+    <div class="product-grid">
+        <div class="product-card">
+            <div class="placeholder-img">📷</div>
+            <h3>Strawberry Jam</h3>
+            <p>650₺</p>
+            <button onclick="addToCart('Strawberry')">Sepete Ekle</button>
+        </div>
+        <div class="product-card">
+            <div class="placeholder-img">📷</div>
+            <h3>Mandarin Jam</h3>
+            <p>650₺</p>
+            <button onclick="addToCart('Mandarin')">Sepete Ekle</button>
+        </div>
+        <!-- Diğerlerini buraya aynı yapıda ekleyebilirsin -->
+    </div>
 
+    <!-- Jam Collection 4'lü Set -->
+    <h2 style="margin-top: 40px;">Jam Collection</h2>
+    <div class="collection-grid">
+        <div class="collection-card">
+            <img src="set_gorseli.jpg" alt="Jam Set">
+            <h3>4'lü Reçel Seti</h3>
+            <p>1200₺</p>
+            <button onclick="addToCart('Set')">Sepete Ekle</button>
+        </div>
+    </div>
+</main>
     <script>
         function toggleMenu() {
             document.getElementById('side-menu').classList.toggle('active');
