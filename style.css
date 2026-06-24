@@ -1,10 +1,17 @@
-body { background-color: #fdfaf6; color: #5a4a42; font-family: sans-serif; margin: 0; }
-.top-bar { background: #7b241c; color: white; text-align: center; padding: 10px; font-size: 14px; }
-.main-header { padding: 20px; position: relative; }
-.menu-container { display: flex; justify-content: space-between; padding: 0 10px; }
-.logo-area { text-align: center; margin-top: -20px; }
-.logo-area h1 { font-size: 28px; letter-spacing: 4px; margin: 0; }
-.logo-area p { font-size: 12px; color: #888; font-style: italic; }
-.side-menu { display: none; background: white; width: 250px; padding: 20px; position: absolute; z-index: 10; border: 1px solid #ddd; }
+:root {
+    --accent-color: #7b241c; /* Vişne çürüğü */
+}
+
+.top-bar { background-color: var(--accent-color); color: white; text-align: center; padding: 10px; }
+
+.header-top { display: flex; justify-content: space-between; padding: 20px; align-items: center; }
+
+.logo-area h1 { color: var(--accent-color); letter-spacing: 4px; }
+
+.cart-icon { cursor: pointer; font-weight: bold; }
+
+.side-menu { display: none; padding: 20px; background: #fdfaf6; border-right: 1px solid #ddd; width: 250px; }
 .side-menu.active { display: block; }
-.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px; }
+
+.side-menu a { text-decoration: none; color: #5a4a42; display: block; padding: 10px 0; }
+.page-content { padding: 20px; display: none; } /* Başta gizli */
