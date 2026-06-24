@@ -1,15 +1,19 @@
-:root { --bordo: #7b241c; }
-body { background: #fdfaf6; color: var(--bordo); font-family: sans-serif; margin: 0; }
+:root { --bordo: #7b241c; --gold: #c5a059; }
 
-.top-bar { background: var(--bordo); color: #fff; text-align: center; padding: 10px; font-weight: bold; }
-.main-header { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-.header-top { display: flex; justify-content: space-between; width: 100%; align-items: center; }
+/* Gold Şerit */
+.gold-top-bar { background: var(--gold); color: #fff; text-align: center; padding: 10px; font-weight: bold; }
 
+/* Başlık ve Alt Başlık */
 .logo-area { text-align: center; color: var(--bordo); }
-.cart-area { font-weight: bold; }
+.logo-area h1 { margin-bottom: 5px; }
+.subtitle { margin-top: 0; }
 
-.side-menu { display: none; background: #fff; width: 250px; padding: 20px; border: 1px solid #ddd; position: absolute; z-index: 100; }
-.side-menu.active { display: block; }
+/* El Yazısı Gold */
+.hero-cursive { font-family: 'Dancing Script', cursive; color: var(--gold); font-size: 1.5rem; text-align: center; margin-top: 10px; }
 
-.section-center { text-align: center; max-width: 600px; margin: 40px auto; }
-.section-center h3 { color: var(--bordo); }
+/* Sepet Sağda */
+.header-top { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+.cart-area { margin-left: auto; font-weight: bold; }
+
+/* Menü Linkleri */
+.side-menu a { color: var(--bordo); text-decoration: none; display: block; padding: 5px 0; }
