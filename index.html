@@ -1,34 +1,40 @@
-<div class="top-bar">1500₺ Üzeri Ücretsiz Kargo</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">1500₺ Üzeri Ücretsiz Kargo</div>
+    
+    <header class="main-header">
+        <div class="header-top">
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            <div class="cart-icon">🛒 Sepet (0)</div>
+        </div>
+        <div class="logo-area">
+            <h1>ATELİER BERA</h1>
+            <p>Handmade Candles</p>
+        </div>
+    </header>
 
-<header class="main-header">
-    <div class="header-top">
-        <div class="menu-btn" onclick="toggleMenu()">☰</div>
-        <div class="cart-icon">🛒 Sepet (0)</div>
-    </div>
-    <div class="logo-area">
-        <h1>ATELİER BERA</h1>
-        <p>Handmade Candles</p>
-    </div>
-</header>
+    <nav id="side-menu" class="side-menu">
+        <ul>
+            <li><a href="#">Bardak Ve Kavanoz Mumlar</a></li>
+            <li><a href="#">Teneke Mumlar</a></li>
+            <li><a href="#">Motif Mumlar</a></li>
+            <li><a href="#">Hakkımızda</a></li>
+            <li><a href="#">İletişim</a></li>
+        </ul>
+    </nav>
 
-<nav id="side-menu" class="side-menu">
-    <ul>
-        <li><a href="bardak-kavanoz.html">Bardak Ve Kavanoz Mumlar</a></li>
-        <li><a href="teneke.html">Teneke Mumlar</a></li>
-        <li><a href="motif.html">Motif Mumlar</a></li>
-        <li><a href="hakkimizda.html">Hakkımızda</a></li>
-        <li><a href="iletisim.html">İletişim</a></li>
-    </ul>
-</nav>
+    <main class="content">
+        </main>
 
-<!-- Hakkımızda ve İletişim Sayfa İçerikleri -->
-<div id="hakkimizda-content" class="page-content">
-    <h2>Hakkımızda</h2>
-    <p>AtelierBera, 2025 yılında özenle tasarlanmış el yapımı mum koleksiyonları sunmak için kuruldu. Doğal içerikler ve sade tasarım anlayışıyla yaşam alanlarınıza sıcak ve zarif bir dokunuş katmayı amaçlar.</p>
-</div>
-
-<div id="iletisim-content" class="page-content">
-    <h2>İletişim</h2>
-    <p>Email: info.atelierbera@gmail.com</p>
-    <p>Instagram: @atelierbera</p>
-</div>
+    <script>
+        function toggleMenu() {
+            document.getElementById('side-menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html
