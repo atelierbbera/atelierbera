@@ -1,70 +1,29 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<!-- Ücretsiz Kargo Şeridi -->
-<div class="top-bar">1500₺ üzeri alışverişlerde ücretsiz kargo!</div>
-
-<nav class="navbar">
-    <div class="menu-toggle" id="mobile-menu">☰</div>
-    <div class="brand-title">ATELİER BERA</div>
-    <div class="cart">Sepet (<span id="cart-count">0</span>)</div>
-</nav>
-
+<!-- Hamburger menü içindeki yeni yapı -->
 <ul class="nav-links">
     <li><a href="#">Ana Sayfa</a></li>
-    <li><a href="#">Bardak Ve Kavanoz Mumlar</a></li>
-    <li><a href="#">Teneke Mumlar</a></li>
-    <li><a href="#">Dekoratif Mumlar</a></li>
-    <li><a href="#">Hakkımızda</a></li>
-    <li><a href="#">İletişim</a></li>
+    <li>
+        <details>
+            <summary>Bardak Ve Kavanoz Mumlar</summary>
+            <ul>
+                <li><a href="#">Bardak Mumlar</a></li>
+                <li>
+                    <details>
+                        <summary>Kavanoz Mumlar</summary>
+                        <ul>
+                            <li><a href="#">Reçel Serisi</a></li>
+                            <li><a href="#">Aromaterapi Serisi</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+        </details>
+    </li>
 </ul>
 
-<header class="hero">
-    <h1>Atölyeden evinize, sevgiyle.</h1>
-</header>
-
-<script src="script.js"></script>
-</body>
-</html>
-<main id="content">
-    <section class="products">
-        <h3>Reçel Serisi</h3>
-        <div class="product-grid">
-            <!-- Örnek Ürün -->
-            <div class="product-card">
-                <p>Mandarin Jam</p>
-                <p>650₺</p>
-                <button onclick="addToCart()">Sepete Ekle</button>
-            </div>
-            <!-- Diğer ürünleri buraya ekleyeceğiz -->
-        </div>
-    </section>
-</main>
-<li><a href="#">BARDAK VE KAVANOZ MUMLAR</a></li>
-
-<main id="content">
-    <h2>Reçel Serisi (650₺)</h2>
-    <div class="product-grid">
-        <div class="product-card">Mandarin Jam<br><button onclick="addToCart()">Sepete Ekle</button></div>
-        <div class="product-card">Raspberry Jam<br><button onclick="addToCart()">Sepete Ekle</button></div>
-        <div class="product-card">Strawberry Jam<br><button onclick="addToCart()">Sepete Ekle</button></div>
-        <div class="product-card">Blueberry Jam<br><button onclick="addToCart()">Sepete Ekle</button></div>
-        <div class="product-card">Lemon Jam<br><button onclick="addToCart()">Sepete Ekle</button></div>
-    </div>
-
-    <h2>Jam Collection (1000₺)</h2>
-    <div class="collection-box">
-        <p>4'lü Setinizi Oluşturun:</p>
-        <select><option>Mandarin</option><option>Raspberry</option><option>Strawberry</option><option>Blueberry</option><option>Lemon</option></select>
-        <select><option>Mandarin</option><option>Raspberry</option><option>Strawberry</option><option>Blueberry</option><option>Lemon</option></select>
-        <select><option>Mandarin</option><option>Raspberry</option><option>Strawberry</option><option>Blueberry</option><option>Lemon</option></select>
-        <select><option>Mandarin</option><option>Raspberry</option><option>Strawberry</option><option>Blueberry</option><option>Lemon</option></select>
-        <br><br>
-        <button onclick="addToCart()">Sepeti Onayla</button>
-    </div>
-</main>
+<!-- Ürün Kartı Yapısı -->
+<div class="product-card">
+    <img src="mum_gorseli.jpg" alt="Ürün" style="width:100%">
+    <h3>Mandarin Jam</h3>
+    <p class="price">650₺</p>
+    <button onclick="addToCart()">Sepete Ekle</button>
+</div>
