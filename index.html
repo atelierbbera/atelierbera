@@ -62,7 +62,7 @@
     </footer>
 
 <script>
-    let cart = []; // Nesne dizisi olarak güncelledik (ürün adı, fiyat vs. tutmak için)
+    let cart = []; 
     const SHOPLINK = "https://www.shopier.com/atelierbera_";
     const WHATSAPP_NO = "905421323418";
 
@@ -72,36 +72,38 @@
         nav.style.width = (nav.style.width === "280px") ? "0" : "280px";
     }
 
-    // Menü alt başlık açma
-    function toggleSub(id) {
-        let el = document.getElementById(id);
-        el.style.display = (el.style.display === "block") ? "none" : "block";
+    // Ana Sayfaya Dönüş
+    function showHome() {
+        document.getElementById('main-content').innerHTML = `
+            <h1 class="logo">ATELIER BERA</h1>
+            <p>handmade candles</p>
+        `;
+        document.getElementById("sideNav").style.width = "0";
     }
 
-    // Ürünleri Listeleme
+    // Ürünleri Listeleme (Fotoğraflı)
     function showProducts(category) {
         const mainContent = document.getElementById('main-content');
         let html = `<div class="product-grid">`;
 
         if (category === 'recel') {
             const recelProducts = [
-                {name: "Strawberry Jam", old: "750 TL", price: "650 TL", val: 650},
-                {name: "Mandarin Jam", old: "750 TL", price: "650 TL", val: 650},
-                {name: "Lemon Jam", old: "750 TL", price: "650 TL", val: 650},
-                {name: "Raspberry Jam", old: "750 TL", price: "650 TL", val: 650},
-                {name: "Blueberry Jam", old: "750 TL", price: "650 TL", val: 650},
-                {name: "Jam Collection", old: "1200 TL", price: "1000 TL", val: 1000, isCollection: true}
+                {name: "Strawberry Jam", old: 750, price: 650, img: "Strawberry Jam.jfif"},
+                {name: "Mandarin Jam", old: 750, price: 650, img: "Mandarin Jam.jfif"},
+                {name: "Lemon Jam", old: 750, price: 650, img: "Lemon Jam.jfif"},
+                {name: "Raspberry Jam", old: 750, price: 650, img: "Raspberry Jam.jfif"},
+                {name: "Blueberry Jam", old: 750, price: 650, img: "Blueberry Jam.jfif"},
+                {name: "Jam Collection", old: 1200, price: 1000, img: "Jam Collection.jfif"}
             ];
 
             recelProducts.forEach(p => {
                 html += `
                 <div class="product-card">
+                    <img src="${p.img}" style="width:100%; height:120px; object-fit:cover;">
                     <h3>${p.name}</h3>
-                    <p class="old-price">${p.old}</p>
-                    <p class="new-price">${p.price}</p>
-                    <button class="btn-add" onclick="${p.isCollection ? 'openCollection()' : 'addToCart(this, \'' + p.name + '\', ' + p.val + ')'}">
-                        ${p.isCollection ? 'Detaya Git' : 'Sepete Ekle'}
-                    </button>
+                    <p class="old-price">${p.old} TL</p>
+                    <p class="new-price">${p.price} TL</p>
+                    <button class="btn-add" onclick="addToCart(this, '${p.name}', ${p.price}, ${p.old})">Sepete Ekle</button>
                 </div>`;
             });
         } else {
@@ -113,30 +115,24 @@
         document.getElementById("sideNav").style.width = "0";
     }
 
-    function openCollection() {
-        alert("Jam Collection Seçenekleri:\n1. Seçenek\n2. Seçenek\n3. Seçenek\n4. Seçenek\nLütfen seçiminizi yapın.");
-    }
-
-    // Sepete Ekleme Animasyonu + Veri Tutma
-    function addToCart(btn, name, price) {
+    // Sepete Ekleme
+    function addToCart(btn, name, price, old) {
         let item = cart.find(i => i.name === name);
         if(item) item.qty++;
-        else cart.push({name: name, price: price, qty: 1});
+        else cart.push({name: name, price: price, old: old, qty: 1});
 
         document.getElementById('cart-count').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
         
-        btn.innerText = "Sepete Eklendi";
-        btn.style.backgroundColor = "#555";
-        setTimeout(() => {
-            btn.innerText = "Sepete Ekle";
-            btn.style.backgroundColor = "#800020";
-        }, 2000);
+        btn.innerText = "Eklendi";
+        setTimeout(() => btn.innerText = "Sepete Ekle", 2000);
     }
 
-    // Sepet Sayfası ve Shopier/WhatsApp Entegrasyonu
+    // Sepet ve İndirim Hesaplama
     function showCart() {
         let main = document.getElementById('main-content');
-        let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        let totalOld = cart.reduce((sum, i) => sum + (i.old * i.qty), 0);
+        let totalNew = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        let discount = totalOld - totalNew;
         let msg = "Merhaba, Atelier Bera'dan siparişim:%0A";
         
         let html = `<h2>Sepetiniz</h2><div class="cart-items">`;
@@ -144,7 +140,13 @@
             html += `<p>${i.name} (x${i.qty}) - ${i.price * i.qty} TL</p>`;
             msg += `- ${i.name} (x${i.qty})%0A`;
         });
-        html += `</div><h3>Toplam: ${total} TL</h3>`;
+        
+        html += `<div style="border-top:1px solid #ccc; margin-top:15px;">
+            <p>Normal Toplam: ${totalOld} TL</p>
+            ${discount > 0 ? `<p style="color:red; font-weight:bold;">İndirim Miktarı: ${discount} TL</p>` : ''}
+            <h3>Ödenecek Toplam: ${totalNew} TL</h3>
+        </div>`;
+        
         html += `
             <a href="${SHOPLINK}" target="_blank"><button class="btn-add">Shopier ile Öde</button></a>
             <a href="https://wa.me/${WHATSAPP_NO}?text=${msg}" target="_blank">
@@ -154,11 +156,10 @@
         main.innerHTML = html;
     }
 
-    // Menü dışına tıklanınca kapatma
+    // Dışarı tıklama
     document.addEventListener('click', function(event) {
         const nav = document.getElementById("sideNav");
-        const menuBtn = document.querySelector(".menu-btn");
-        if (nav.style.width === "280px" && !nav.contains(event.target) && !menuBtn.contains(event.target)) {
+        if (nav.style.width === "280px" && !nav.contains(event.target) && !event.target.classList.contains("menu-btn")) {
             nav.style.width = "0";
         }
     });
