@@ -8,6 +8,7 @@
         .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.85rem; }
         .header-wrapper { display: flex; justify-content: space-between; padding: 20px; align-items: center; border-bottom: 1px solid #eee; }
         .menu-btn { cursor: pointer; font-size: 28px; color: #800020; }
+        .logo { color: #800020; font-weight: bold; font-size: 1.5rem; } /* Bordo Logo */
         
         .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
         .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; font-weight: bold; }
@@ -51,7 +52,7 @@
     </div>
 
     <div id="main-content">
-        <h1>ATELIER BERA</h1>
+        <h1 class="logo">ATELIER BERA</h1>
         <p>handmade candles</p>
     </div>
 
@@ -61,24 +62,29 @@
     </footer>
 
 <script>
-    const products = { 'recel': [ {id: 1, name: "Strawberry Jam", old: 800, price: 650, img: "Strawberry Jam.jfif"}, {id: 2, name: "Blueberry Jam", old: 800, price: 650, img: "Blueberry Jam.jfif"} ] };
+    const products = {
+        'recel': [
+            {id: 1, name: "Strawberry Jam", old: 800, price: 650, img: "Strawberry Jam.jfif"},
+            {id: 2, name: "Blueberry Jam", old: 800, price: 650, img: "Blueberry Jam.jfif"},
+            {id: 3, name: "Lemon Jam", old: 800, price: 650, img: "Lemon Jam.jfif"},
+            {id: 4, name: "Mandarin Jam", old: 800, price: 650, img: "Mandarin Jam.jfif"},
+            {id: 5, name: "Raspberry Jam", old: 800, price: 650, img: "Raspberry Jam.jfif"},
+            {id: 6, name: "Jam Collection", old: 1200, price: 1000, img: "Jam Collection.jfif"}
+        ]
+    };
     let cart = [];
 
     function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
     function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
     
-    // Dışarı tıklayınca menüleri kapat
-    document.addEventListener('click', function(event) {
-        const nav = document.getElementById("sideNav");
-        const btn = document.querySelector(".menu-btn");
-        if (!nav.contains(event.target) && !btn.contains(event.target)) {
-            nav.style.width = "0";
-            document.querySelectorAll('.sub-menu').forEach(el => el.style.display = 'none');
-        }
-    });
-
     function showHome() {
-        document.getElementById('main-content').innerHTML = `<h1>ATELIER BERA</h1><p>handmade candles</p>`;
+        document.getElementById('main-content').innerHTML = `<h1 class="logo">ATELIER BERA</h1><p>handmade candles</p>`;
+        closeNav();
+    }
+
+    function closeNav() { 
+        document.getElementById("sideNav").style.width = "0"; 
+        document.querySelectorAll('.sub-menu').forEach(el => el.style.display = 'none');
     }
 
     function showProducts(cat) {
@@ -88,15 +94,16 @@
             main.innerHTML = `<div class="product-grid" id="grid"></div>`;
             products[cat].forEach(p => {
                 document.getElementById('grid').innerHTML += `
-                <div class="product-card">
-                    <img src="${p.img}" onclick="showDetail(${p.id}, '${cat}')">
-                    <h3 onclick="showDetail(${p.id}, '${cat}')">${p.name}</h3>
+                <div class="product-card" onclick="showDetail(${p.id}, '${cat}')">
+                    <img src="${p.img}">
+                    <h3>${p.name}</h3>
                     <p class="old-price">${p.old} TL</p>
                     <p class="new-price">${p.price} TL</p>
                     <button class="btn-add" onclick="addToCart(event, ${p.id}, '${cat}')">Sepete Ekle</button>
                 </div>`;
             });
         }
+        closeNav();
     }
 
     function addToCart(event, id, cat) {
@@ -119,8 +126,9 @@
             totalNew += item.price * item.qty;
             html += `<div class="cart-item"><span>${item.name} (x${item.qty})</span><span>${item.price * item.qty} TL</span></div>`;
         });
-        html += `<div class="cart-summary"><p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p><p>İndirimli Toplam: ${totalNew} TL</p><button class="btn-add" onclick="alert('Ödeme sayfasına yönlendiriliyorsunuz...')">Alışverişi Tamamla</button></div>`;
+        html += `<div class="cart-summary"><p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p><p>İndirimli Toplam: ${totalNew} TL</p><button class="btn-add" onclick="alert('Ödeme tamamlandı!')">Alışverişi Tamamla</button></div>`;
         document.getElementById('main-content').innerHTML = html;
+        closeNav();
     }
 
     function showDetail(id, cat) {
