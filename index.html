@@ -16,13 +16,14 @@
         #main-content { padding: 40px 20px; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 800px; margin: auto; }
         .product-card { border: 1px solid #eee; padding: 8px; text-align: center; cursor: pointer; background: white; border-radius: 6px; }
-        .product-card img { width: 100%; height: 120px; object-fit: contain; border-radius: 4px; }
+        .product-card img { width: 100%; height: 120px; object-fit: contain; }
+        .old-price { text-decoration: line-through; color: #888; font-size: 0.8rem; }
+        .new-price { color: #800020; font-weight: bold; }
         .btn-add { background: #800020; color: white; border: none; padding: 8px; width: 100%; cursor: pointer; border-radius: 4px; }
         
-        /* Sepet Stilleri */
         .cart-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding: 15px; max-width: 600px; margin: auto; }
         .cart-item img { width: 60px; height: 60px; object-fit: cover; }
-        .cart-summary { margin-top: 20px; font-weight: bold; font-size: 1.2rem; }
+        .cart-summary { margin-top: 20px; font-weight: bold; }
         
         #toast { visibility: hidden; background: #333; color: #fff; text-align: center; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); border-radius: 5px; }
         #toast.show { visibility: visible; }
@@ -42,7 +43,7 @@
         <a onclick="toggleSub('menu1')">1- Bardak ve Kavanoz Mumlar</a>
         <div id="menu1" class="sub-menu">
             <a onclick="showProducts('recel')">Reçel Serisi</a>
-            <a onclick="showProducts('aromaterapi')">Aromaterapi Serisi</a>
+            <a onclick="showProducts('bardak_mum')">Bardak Mumları</a>
         </div>
         <a onclick="showProducts('teneke')">2- Teneke Kutu Mumlar</a>
         <a onclick="showProducts('dekoratif')">3- Dekoratif Mumlar</a>
@@ -56,11 +57,8 @@
 <script>
     const products = {
         'recel': [
-            {id: 1, name: "Strawberry Jam", price: 650, img: "Strawberry Jam.jfif"},
-            {id: 2, name: "Blueberry Jam", price: 650, img: "Blueberry Jam.jfif"},
-            {id: 3, name: "Lemon Jam", price: 650, img: "Lemon Jam.jfif"},
-            {id: 4, name: "Mandarin Jam", price: 650, img: "Mandarin Jam.jfif"},
-            {id: 5, name: "Raspberry Jam", price: 650, img: "Raspberry Jam.jfif"}
+            {id: 1, name: "Strawberry Jam", old: 800, price: 650, img: "Strawberry Jam.jfif"},
+            {id: 2, name: "Blueberry Jam", old: 800, price: 650, img: "Blueberry Jam.jfif"}
         ]
     };
 
@@ -76,7 +74,7 @@
 
     function showProducts(cat) {
         const main = document.getElementById('main-content');
-        if (!products[cat]) { main.innerHTML = `<h2>Çok yakında sizlerle...</h2>`; }
+        if (!products[cat]) { main.innerHTML = `<h2 style="margin-top:50px;">Çok yakında sizlerle...</h2>`; }
         else {
             main.innerHTML = `<div class="product-grid" id="grid"></div>`;
             products[cat].forEach(p => {
@@ -84,7 +82,8 @@
                 <div class="product-card" onclick="showDetail(${p.id}, '${cat}')">
                     <img src="${p.img}">
                     <h3>${p.name}</h3>
-                    <p>${p.price} TL</p>
+                    <p class="old-price">${p.old} TL</p>
+                    <p class="new-price">${p.price} TL</p>
                     <button class="btn-add" onclick="addToCart(event, ${p.id}, '${cat}')">Sepete Ekle</button>
                 </div>`;
             });
@@ -98,7 +97,6 @@
         const existing = cart.find(item => item.id === id);
         if (existing) existing.qty += 1;
         else cart.push({...product, qty: 1});
-        
         document.getElementById('cart-count').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
         const x = document.getElementById("toast");
         x.className = "show";
@@ -107,9 +105,10 @@
 
     function showCart() {
         let html = `<h2>Sepetiniz</h2>`;
-        let total = 0;
+        let totalOld = 0, totalNew = 0;
         cart.forEach(item => {
-            total += item.price * item.qty;
+            totalOld += item.old * item.qty;
+            totalNew += item.price * item.qty;
             html += `
             <div class="cart-item">
                 <img src="${item.img}">
@@ -119,7 +118,8 @@
         });
         html += `
             <div class="cart-summary">
-                <p>Toplam: ${total} TL</p>
+                <p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p>
+                <p style="color:#800020;">İndirimli Toplam: ${totalNew} TL</p>
                 <button class="btn-add" onclick="alert('Ödeme sayfasına yönlendiriliyorsunuz...')">Alışverişi Tamamla</button>
             </div>`;
         document.getElementById('main-content').innerHTML = html;
@@ -132,7 +132,8 @@
             <div style="text-align:center; max-width:400px; margin:auto;">
                 <img src="${p.img}" style="width:100%; border-radius:10px;">
                 <h1>${p.name}</h1>
-                <p>${p.price} TL</p>
+                <p class="old-price">${p.old} TL</p>
+                <p class="new-price">${p.price} TL</p>
                 <button class="btn-add" onclick="addToCart(event, ${p.id}, '${cat}')">Sepete Ekle</button>
                 <br><br><a href="#" onclick="showProducts('${cat}')">Geri Dön</a>
             </div>`;
