@@ -62,92 +62,106 @@
     </footer>
 
 <script>
-    const products = {
-        'recel': [
-            {id: 1, name: "Strawberry Jam", old: 800, price: 650, img: "Strawberry Jam.jfif"},
-            {id: 2, name: "Blueberry Jam", old: 800, price: 650, img: "Blueberry Jam.jfif"},
-            {id: 3, name: "Lemon Jam", old: 800, price: 650, img: "Lemon Jam.jfif"},
-            {id: 4, name: "Mandarin Jam", old: 800, price: 650, img: "Mandarin Jam.jfif"},
-            {id: 5, name: "Raspberry Jam", old: 800, price: 650, img: "Raspberry Jam.jfif"},
-            {id: 6, name: "Jam Collection", old: 1200, price: 1000, img: "Jam Collection.jfif"}
-        ]
-    };
-    let cart = [];
+    let cart = []; // Nesne dizisi olarak güncelledik (ürün adı, fiyat vs. tutmak için)
+    const SHOPLINK = "https://www.shopier.com/atelierbera_";
+    const WHATSAPP_NO = "905421323418";
 
-    // Menü açma/kapama fonksiyonları
-    function toggleNav(event) { event.stopPropagation(); document.getElementById("sideNav").style.width = "280px"; }
-    function toggleSub(id, event) { event.stopPropagation(); let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
-    
-    // Sayfanın herhangi bir yerine tıklandığında menüyü kapat
-    document.addEventListener('click', function(event) {
-        const nav = document.getElementById("sideNav");
-        if (nav.style.width === "280px" && !nav.contains(event.target)) {
-            nav.style.width = "0";
-            document.querySelectorAll('.sub-menu').forEach(el => el.style.display = 'none');
-        }
-    });
-
-    function showHome() {
-        document.getElementById('main-content').innerHTML = `<h1 class="logo">ATELIER BERA</h1><p>handmade candles</p>`;
-        closeNav();
+    // Menü açma/kapama
+    function toggleNav() {
+        let nav = document.getElementById("sideNav");
+        nav.style.width = (nav.style.width === "280px") ? "0" : "280px";
     }
 
-    function closeNav() { document.getElementById("sideNav").style.width = "0"; }
+    // Menü alt başlık açma
+    function toggleSub(id) {
+        let el = document.getElementById(id);
+        el.style.display = (el.style.display === "block") ? "none" : "block";
+    }
 
-    function showProducts(cat) {
-        const main = document.getElementById('main-content');
-        if (!products[cat]) { main.innerHTML = `<h2 style="margin-top:50px;">Çok yakında sizlerle...</h2>`; }
-        else {
-            main.innerHTML = `<div class="product-grid" id="grid"></div>`;
-            products[cat].forEach(p => {
-                document.getElementById('grid').innerHTML += `
-                <div class="product-card" onclick="showDetail(${p.id}, '${cat}')">
-                    <img src="${p.img}">
+    // Ürünleri Listeleme
+    function showProducts(category) {
+        const mainContent = document.getElementById('main-content');
+        let html = `<div class="product-grid">`;
+
+        if (category === 'recel') {
+            const recelProducts = [
+                {name: "Strawberry Jam", old: "750 TL", price: "650 TL", val: 650},
+                {name: "Mandarin Jam", old: "750 TL", price: "650 TL", val: 650},
+                {name: "Lemon Jam", old: "750 TL", price: "650 TL", val: 650},
+                {name: "Raspberry Jam", old: "750 TL", price: "650 TL", val: 650},
+                {name: "Blueberry Jam", old: "750 TL", price: "650 TL", val: 650},
+                {name: "Jam Collection", old: "1200 TL", price: "1000 TL", val: 1000, isCollection: true}
+            ];
+
+            recelProducts.forEach(p => {
+                html += `
+                <div class="product-card">
                     <h3>${p.name}</h3>
-                    <p class="old-price">${p.old} TL</p>
-                    <p class="new-price">${p.price} TL</p>
-                    <button class="btn-add" onclick="addToCart(event, ${p.id}, '${cat}')">Sepete Ekle</button>
+                    <p class="old-price">${p.old}</p>
+                    <p class="new-price">${p.price}</p>
+                    <button class="btn-add" onclick="${p.isCollection ? 'openCollection()' : 'addToCart(this, \'' + p.name + '\', ' + p.val + ')'}">
+                        ${p.isCollection ? 'Detaya Git' : 'Sepete Ekle'}
+                    </button>
                 </div>`;
             });
+        } else {
+            html += `<h2 style="grid-column: span 2; text-align:center; padding: 50px;">Çok yakında sizlerle..</h2>`;
         }
+        
+        html += `</div>`;
+        mainContent.innerHTML = html;
+        document.getElementById("sideNav").style.width = "0";
     }
 
-    function addToCart(event, id, cat) {
-        event.stopPropagation();
-        const product = products[cat].find(p => p.id === id);
-        const existing = cart.find(item => item.id === id);
-        if (existing) existing.qty += 1;
-        else cart.push({...product, qty: 1});
+    function openCollection() {
+        alert("Jam Collection Seçenekleri:\n1. Seçenek\n2. Seçenek\n3. Seçenek\n4. Seçenek\nLütfen seçiminizi yapın.");
+    }
+
+    // Sepete Ekleme Animasyonu + Veri Tutma
+    function addToCart(btn, name, price) {
+        let item = cart.find(i => i.name === name);
+        if(item) item.qty++;
+        else cart.push({name: name, price: price, qty: 1});
+
         document.getElementById('cart-count').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
-        const x = document.getElementById("toast");
-        x.className = "show";
-        setTimeout(() => x.className = x.className.replace("show", ""), 2000);
+        
+        btn.innerText = "Sepete Eklendi";
+        btn.style.backgroundColor = "#555";
+        setTimeout(() => {
+            btn.innerText = "Sepete Ekle";
+            btn.style.backgroundColor = "#800020";
+        }, 2000);
     }
 
+    // Sepet Sayfası ve Shopier/WhatsApp Entegrasyonu
     function showCart() {
-        let html = `<h2>Sepetiniz</h2>`;
-        let totalOld = 0, totalNew = 0;
-        cart.forEach(item => {
-            totalOld += item.old * item.qty;
-            totalNew += item.price * item.qty;
-            html += `<div class="cart-item"><span>${item.name} (x${item.qty})</span><span>${item.price * item.qty} TL</span></div>`;
+        let main = document.getElementById('main-content');
+        let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        let msg = "Merhaba, Atelier Bera'dan siparişim:%0A";
+        
+        let html = `<h2>Sepetiniz</h2><div class="cart-items">`;
+        cart.forEach(i => {
+            html += `<p>${i.name} (x${i.qty}) - ${i.price * i.qty} TL</p>`;
+            msg += `- ${i.name} (x${i.qty})%0A`;
         });
-        html += `<div class="cart-summary"><p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p><p>İndirimli Toplam: ${totalNew} TL</p><button class="btn-add" onclick="alert('Ödeme tamamlandı!')">Alışverişi Tamamla</button></div>`;
-        document.getElementById('main-content').innerHTML = html;
+        html += `</div><h3>Toplam: ${total} TL</h3>`;
+        html += `
+            <a href="${SHOPLINK}" target="_blank"><button class="btn-add">Shopier ile Öde</button></a>
+            <a href="https://wa.me/${WHATSAPP_NO}?text=${msg}" target="_blank">
+                <button class="btn-add" style="background:#25D366">WhatsApp ile Onayla</button>
+            </a>
+        `;
+        main.innerHTML = html;
     }
 
-    function showDetail(id, cat) {
-        const p = products[cat].find(x => x.id === id);
-        document.getElementById('main-content').innerHTML = `
-            <div style="text-align:center; max-width:400px; margin:auto;">
-                <img src="${p.img}" style="width:100%; border-radius:10px;">
-                <h1>${p.name}</h1>
-                <p class="old-price">${p.old} TL</p>
-                <p class="new-price">${p.price} TL</p>
-                <button class="btn-add" onclick="addToCart(event, ${p.id}, '${cat}')">Sepete Ekle</button>
-                <br><br><a href="#" onclick="showProducts('${cat}')">Geri Dön</a>
-            </div>`;
-    }
+    // Menü dışına tıklanınca kapatma
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById("sideNav");
+        const menuBtn = document.querySelector(".menu-btn");
+        if (nav.style.width === "280px" && !nav.contains(event.target) && !menuBtn.contains(event.target)) {
+            nav.style.width = "0";
+        }
+    });
 </script>
 </body>
 </html>
