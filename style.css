@@ -7,15 +7,45 @@
 }
 .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; }
 
-/* Orta Yazı */
-.hero-content {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%); text-align: center;
+/* Orta Yazı (Hero) */
+.hero { 
+    height: 60vh; display: flex; flex-direction: column; 
+    justify-content: center; align-items: center; text-align: center;
 }
-.hero-content h1 { color: #800020; font-size: 3rem; margin: 0; }
-.hero-content p { color: #333; font-size: 1.5rem; }
-.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 40px; }
-.product-card { border: 1px solid #ddd; padding: 20px; text-align: center; border-radius: 8px; }
+h1 { color: #800020; font-size: 3rem; margin: 0; }
+.subtitle { font-style: italic; color: #333; font-size: 1.5rem; }
+
+/* Ürün Grid Yapısı (Yan yana 2'li dizilim) */
+.product-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; /* Her zaman yan yana 2 sütun */
+    gap: 20px; 
+    padding: 20px; 
+    max-width: 600px; /* Çok yayılmaması için genişliği sınırladık */
+    margin: 0 auto;   /* Sayfanın tam ortasında durması için */
+}
+
+.product-card { 
+    border: 1px solid #ddd; 
+    padding: 20px; 
+    text-align: center; 
+    border-radius: 8px; 
+    background: #fff;
+}
+
+/* İndirim Görünümü */
 .old-price { text-decoration: line-through; color: #888; font-size: 0.9rem; }
-.new-price { color: #800020; font-weight: bold; font-size: 1.2rem; }
-.btn-add { background: #800020; color: white; padding: 10px 20px; border: none; cursor: pointer; transition: 0.3s; }
+.new-price { color: #800020; font-weight: bold; font-size: 1.2rem; margin: 5px 0; }
+
+/* Buton Stili */
+.btn-add { 
+    background: #800020; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    cursor: pointer; 
+    transition: 0.3s;
+    border-radius: 5px;
+    width: 100%;
+}
+.btn-add:hover { background: #555; }
