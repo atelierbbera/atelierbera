@@ -5,36 +5,58 @@
     <title>Atelier Bera</title>
     <style>
         body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; }
-        
-        /* Sepete Eklendi Bildirimi */
-        #toast { visibility: hidden; background: #333; color: #fff; text-align: center; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); border-radius: 5px; font-size: 0.9rem; }
-        #toast.show { visibility: visible; }
-
+        .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.85rem; }
         .header-wrapper { display: flex; justify-content: space-between; padding: 20px; align-items: center; border-bottom: 1px solid #eee; }
+        .menu-btn { cursor: pointer; font-size: 28px; color: #800020; }
         
-        /* Ürün Kartları Düzenlemesi */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; padding: 15px; max-width: 800px; margin: auto; }
-        .product-card { border: 1px solid #eee; padding: 10px; text-align: center; cursor: pointer; background: white; border-radius: 8px; }
-        .product-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 4px; }
-        .product-card h3 { font-size: 0.95rem; margin: 10px 0; }
+        /* Yan Menü */
+        .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
+        .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; font-weight: bold; }
+        .sub-menu { display: none; padding-left: 20px; font-weight: normal; font-size: 0.9rem; }
         
-        .new-price { color: #800020; font-weight: bold; font-size: 1rem; }
+        /* Ürün Kartları (Geniş Açılı ve Küçük Resim) */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 15px; max-width: 800px; margin: auto; }
+        .product-card { border: 1px solid #eee; padding: 8px; text-align: center; cursor: pointer; background: white; border-radius: 6px; }
+        .product-card img { width: 100%; height: 120px; object-fit: contain; border-radius: 4px; }
+        .new-price { color: #800020; font-weight: bold; }
         .old-price { text-decoration: line-through; color: #888; font-size: 0.75rem; }
-        .btn-add { background: #800020; color: white; border: none; padding: 8px; width: 100%; cursor: pointer; margin-top: 8px; border-radius: 4px; font-size: 0.85rem; }
+        .btn-add { background: #800020; color: white; border: none; padding: 8px; width: 100%; cursor: pointer; border-radius: 4px; font-size: 0.8rem; }
+        
+        /* Bildirim */
+        #toast { visibility: hidden; background: #333; color: #fff; text-align: center; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); border-radius: 5px; }
+        #toast.show { visibility: visible; }
+        
+        footer { padding: 30px 20px; text-align: center; color: #666; border-top: 1px solid #eee; font-size: 0.8rem; margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <div id="toast">Sepetinize eklendi!</div>
-    
+    <div class="top-bar">1500 TL üzeri alışverişlerde kargo ücretsiz!</div>
     <div class="header-wrapper">
-        <div onclick="location.reload()" style="cursor:pointer; font-size: 20px;">☰</div>
+        <div class="menu-btn" onclick="toggleNav()">☰</div>
         <div>Sepet (<span id="cart-count">0</span>)</div>
+    </div>
+
+    <div id="sideNav" class="side-nav">
+        <a onclick="showHome()">Ana Sayfa</a>
+        <a onclick="toggleSub('menu1')">1- Bardak ve Kavanoz Mumlar</a>
+        <div id="menu1" class="sub-menu">
+            <a onclick="showProducts('recel')">Reçel Serisi</a>
+            <a onclick="showProducts('aromaterapi')">Aromaterapi Serisi</a>
+        </div>
+        <a onclick="showProducts('teneke')">2- Teneke Kutu Mumlar</a>
+        <a onclick="showProducts('dekoratif')">3- Dekoratif Mumlar</a>
     </div>
 
     <div id="main-content">
         <div class="product-grid" id="grid"></div>
     </div>
+
+    <footer>
+        <p>Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir.</p>
+        <p>İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera</p>
+    </footer>
 
 <script>
     const products = [
@@ -46,6 +68,15 @@
         {id: 6, name: "Jam Collection", old: "1200 TL", price: "1000 TL", img: "Jam Collection.jfif"}
     ];
 
+    function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
+    function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
+    
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById("sideNav");
+        const btn = document.querySelector(".menu-btn");
+        if (!nav.contains(event.target) && !btn.contains(event.target)) nav.style.width = "0";
+    });
+
     function showToast() {
         const x = document.getElementById("toast");
         x.className = "show";
@@ -53,10 +84,14 @@
     }
 
     function addToCart(event) {
-        // Kartın içine tıklayınca detay sayfasına gitmesini engelle
-        event.stopPropagation(); 
+        event.stopPropagation();
         document.getElementById('cart-count').innerText = parseInt(document.getElementById('cart-count').innerText) + 1;
         showToast();
+    }
+
+    function showHome() {
+        renderProducts();
+        document.getElementById("sideNav").style.width = "0";
     }
 
     function renderProducts() {
@@ -80,8 +115,8 @@
             <div style="padding:20px; text-align:center; max-width:500px; margin:auto;">
                 <img src="${p.img}" style="width:100%; border-radius:10px;">
                 <h1>${p.name}</h1>
-                <p class="old-price" style="font-size:1.2rem">${p.old}</p>
-                <p class="new-price" style="font-size:1.5rem">${p.price}</p>
+                <p class="old-price">${p.old}</p>
+                <p class="new-price">${p.price}</p>
                 <button class="btn-add" style="padding:15px; font-size:1rem" onclick="addToCart(event)">Sepete Ekle</button>
                 <br><br>
                 <a href="#" onclick="location.reload()">Geri Dön</a>
