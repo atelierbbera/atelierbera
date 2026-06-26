@@ -1,23 +1,16 @@
-/* Sol menü paneli */
-.menu-overlay {
-    height: 100%;
-    width: 0; /* Başlangıçta kapalı */
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #fdfaf6;
-    overflow-x: hidden;
-    transition: 0.5s; /* Kayma efekti */
-    padding-top: 60px;
-    z-index: 200;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+/* Menü Paneli */
+.side-nav {
+    height: 100%; width: 0; position: fixed; z-index: 1000;
+    top: 0; left: 0; background-color: #fdfaf6;
+    overflow-x: hidden; transition: 0.4s; padding-top: 60px;
+    border-right: 1px solid #ddd;
 }
+.side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; }
 
-.menu-overlay.active { width: 280px; }
-
-/* Alt başlıklar (Akordeon) */
-.submenu {
-    display: none;
-    padding-left: 20px;
+/* Orta Yazı */
+.hero-content {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); text-align: center;
 }
-.menu-item { padding: 15px; cursor: pointer; color: #800020; font-weight: bold; }
+.hero-content h1 { color: #800020; font-size: 3rem; margin: 0; }
+.hero-content p { color: #333; font-size: 1.5rem; }
