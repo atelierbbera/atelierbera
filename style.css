@@ -1,37 +1,23 @@
-<style>
-    /* Hamburger Menü Stilleri */
-    .menu-overlay {
-        display: none; /* Başlangıçta gizli */
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(253, 250, 246, 0.95);
-        z-index: 200;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .menu-overlay.active { display: flex; }
-    .menu-overlay ul { list-style: none; padding: 0; text-align: center; }
-    .menu-overlay li { margin: 20px 0; font-size: 1.5rem; cursor: pointer; color: #800020; }
-    .close-btn { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; }
-</style>
+/* Sol menü paneli */
+.menu-overlay {
+    height: 100%;
+    width: 0; /* Başlangıçta kapalı */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fdfaf6;
+    overflow-x: hidden;
+    transition: 0.5s; /* Kayma efekti */
+    padding-top: 60px;
+    z-index: 200;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
 
-<!-- Hamburger İkonu -->
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
+.menu-overlay.active { width: 280px; }
 
-<!-- Hamburger Menü Ekranı -->
-<div id="nav-menu" class="menu-overlay">
-    <div class="close-btn" onclick="toggleMenu()">✕</div>
-    <ul>
-        <li onclick="alert('Bardak ve Kavanozlar yakında...')">Bardak ve Kavanoz Mumlar</li>
-        <li onclick="alert('Teneke Kutu Mumlar yakında...')">Teneke Kutu Mumlar</li>
-        <li onclick="alert('Motif Mumlar yakında...')">Motif Mumlar</li>
-    </ul>
-</div>
-
-<script>
-    function toggleMenu() {
-        const menu = document.getElementById('nav-menu');
-        menu.classList.toggle('active');
-    }
-</script>
+/* Alt başlıklar (Akordeon) */
+.submenu {
+    display: none;
+    padding-left: 20px;
+}
+.menu-item { padding: 15px; cursor: pointer; color: #800020; font-weight: bold; }
