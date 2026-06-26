@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Atelier Bera</title>
+    <style>
+        body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.9rem; }
+        .header-wrapper { display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; position: relative; }
+        .menu-btn { cursor: pointer; font-size: 28px; color: #800020; }
+        
+        #toast { visibility: hidden; min-width: 200px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 10px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); }
+        #toast.show { visibility: visible; }
+
+        .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
+        .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; font-weight: bold; }
+        .sub-menu { display: none; padding-left: 20px; font-weight: normal; font-size: 0.9rem; }
+        
+        #main-content { flex: 1; padding: 20px; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: 0 auto; }
+        .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #fff; cursor: pointer; }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
+        
+        .old-price { text-decoration: line-through; color: #888; font-size: 0.8rem; }
+        .new-price { color: #800020; font-weight: bold; font-size: 1.1rem; }
+        .btn-add { background: #800020; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 10px; width: 100%; }
+        footer { padding: 30px 20px; text-align: center; color: #666; border-top: 1px solid #eee; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div id="toast">Ürün sepete eklendi!</div>
+    <div class="top-bar">1500 TL üzeri alışverişlerde kargo ücretsiz!</div>
+    <div class="header-wrapper">
+        <div class="menu-btn" onclick="toggleNav()">☰</div>
+        <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
+    </div>
+
+    <div id="sideNav" class="side-nav">
+        <a onclick="showHome()">Ana Sayfa</a>
+        <a onclick="toggleSub('menu1')">1- Bardak ve Kavanoz Mumlar</a>
+        <div id="menu1" class="sub-menu">
+            <a onclick="showProducts('bardak')">Bardak Mumlar</a>
+            <a onclick="toggleSub('menu1-1')">Kavanoz Mumlar</a>
+            <div id="menu1-1" class="sub-menu">
+                <a onclick="showProducts('recel')">Reçel Serisi</a>
+                <a onclick="showProducts('aromaterapi')">Aromaterapi Serisi</a>
+            </div>
+        </div>
+        <a onclick="showProducts('teneke')">2- Teneke Kutu Mumlar</a>
+        <a onclick="showProducts('dekoratif')">3- Dekoratif Mumlar</a>
+    </div>
+
+    <div id="main-content">
+        <h1>ATELIER BERA</h1>
+        <p>handmade candles</p>
+    </div>
+
+    <footer>
+        <p>Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir.</p>
+        <p>İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera</p>
+    </footer>
+
+<script>
+    const products = {
+        'recel': [
+            {id: 1, name: "Strawberry Jam", old: "800 TL", price: "650 TL", img: "Strawberry Jam.jfif"},
+            {id: 2, name: "Blueberry Jam", old: "800 TL", price: "650 TL", img: "Blueberry Jam.jfif"},
+            {id: 3, name: "Lemon Jam", old: "800 TL", price: "650 TL", img: "Lemon Jam.jfif"},
+            {id: 4, name: "Mandarin Jam", old: "800 TL", price: "650 TL", img: "Mandarin Jam.jfif"},
+            {id: 5, name: "Raspberry Jam", old: "800 TL", price: "650 TL", img: "Raspberry Jam.jfif"},
+            {id: 6, name: "Jam Collection", old: "1200 TL", price: "1000 TL", img: "Jam Collection.jfif"}
+        ]
+    };
+
+    function showToast() {
+        const x = document.getElementById("toast");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+    }
+
+    function addToCart() {
+        let count = parseInt(document.getElementById('cart-count').innerText) + 1;
+        document.getElementById('cart-count').innerText = count;
+        showToast();
+    }
+
+    function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
+    function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
+    
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById("sideNav");
+        const btn = document.querySelector(".menu-btn");
+        if (!nav.contains(event.target) && !btn.contains(event.target)) nav.style.width = "0";
+    });
+
+    function showHome() {
+        document.getElementById('main-content').innerHTML = `<h1>ATELIER BERA</h1><p>handmade candles</p>`;
+        document.getElementById("sideNav").style.width = "0";
+    }
+
+    function showProducts(cat) {
+        const main = document.getElementById('main-content');
+        if (!products[cat]) { main.innerHTML = `<h2>Çok yakında sizlerle..</h2>`; } 
+        else {
+            main.innerHTML = `<div class="product-grid"></div>`;
+            const grid = main.querySelector('.product-grid');
+            products[cat].forEach(p => {
+                grid.innerHTML += `
+                <div class="product-card" onclick="showDetails(${p.id}, '${cat}')">
+                    <img src="${p.img}" alt="${p.name}">
+                    <h3>${p.name}</h3>
+                    <p class="old-price">${p.old}</p>
+                    <p class="new-price">${p.price}</p>
+                </div>`;
+            });
+        }
+        document.getElementById("sideNav").style.width = "0";
+    }
+
+    function showDetails(id, cat) {
+        const p = products[cat].find(x => x.id === id);
+        document.getElementById('main-content').innerHTML = `
+        <div style="max-width:400px; margin:auto; text-align:center;">
+            <img src="${p.img}" style="width:100%; border-radius:10px;">
+            <h2>${p.name}</h2>
+            <p class="old-price">${p.old}</p>
+            <p class="new-price">${p.price}</p>
+            <button class="btn-add" onclick="addToCart()">Sepete Ekle</button>
+            <br><br>
+            <button onclick="showProducts('${cat}')">Geri Dön</button>
+        </div>`;
+    }
+</script>
+</body>
+</html>
