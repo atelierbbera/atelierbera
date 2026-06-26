@@ -5,28 +5,22 @@
     <title>Atelier Bera</title>
     <style>
         body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
-        
         .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.9rem; }
         .header-wrapper { display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; }
         .menu-btn, .cart-btn { cursor: pointer; font-size: 24px; color: #800020; }
-
         .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; overflow-x: hidden; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; }
         .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; }
         .sub-menu { display: none; padding-left: 20px; font-size: 0.9rem; }
-
         #main-content { flex: 1; padding: 20px; }
         .hero { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         h1 { color: #800020; font-size: 3rem; margin: 0; }
         .subtitle { font-style: italic; color: #333; font-size: 1.2rem; }
-
-        /* Ürün Grid Yapısı */
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: 0 auto; }
         .product-card { border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px; background: #fff; }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
         .old-price { text-decoration: line-through; color: #888; font-size: 0.8rem; }
         .new-price { color: #800020; font-weight: bold; font-size: 1.1rem; }
         .btn-add { background: #800020; color: white; padding: 8px 15px; border: none; cursor: pointer; margin-top: 10px; width: 100%; }
-
-        /* Modal Stili */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
         .modal-content { background: #fdfaf6; margin: 15% auto; padding: 25px; width: 90%; max-width: 350px; border-radius: 10px; text-align: center; }
     </style>
@@ -34,7 +28,6 @@
 <body>
 
     <div class="top-bar">1500 TL üzeri alışverişlerinizde kargo ücretsiz!</div>
-    
     <div class="header-wrapper">
         <div class="menu-btn" onclick="toggleNav()">☰</div>
         <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
@@ -43,12 +36,11 @@
     <div id="collectionModal" class="modal">
         <div class="modal-content">
             <h3>Jam Collection</h3>
-            <p>Lütfen bir set seçin:</p>
             <select id="jamSelect" style="width:100%; padding:10px; margin-bottom:20px;">
-                <option value="Set 1">1. Seçenek (Meyve Seti A)</option>
-                <option value="Set 2">2. Seçenek (Meyve Seti B)</option>
-                <option value="Set 3">3. Seçenek (Meyve Seti C)</option>
-                <option value="Set 4">4. Seçenek (Meyve Seti D)</option>
+                <option value="Set 1">1. Seçenek</option>
+                <option value="Set 2">2. Seçenek</option>
+                <option value="Set 3">3. Seçenek</option>
+                <option value="Set 4">4. Seçenek</option>
             </select>
             <button class="btn-add" onclick="closeModal()" style="background:#555;">İptal</button>
             <button class="btn-add" onclick="addToCartFromModal()">Sepete Ekle</button>
@@ -62,11 +54,8 @@
             <a onclick="toggleSub('kavanoz-sub')">Kavanoz Mumlar</a>
             <div id="kavanoz-sub" class="sub-menu">
                 <a onclick="showProducts('recel')">Reçel Serisi</a>
-                <a onclick="showProducts('yakinda')">Aromaterapi Serisi</a>
             </div>
         </div>
-        <a onclick="showProducts('yakinda')">2- Teneke Kutu Mumlar</a>
-        <a onclick="showProducts('yakinda')">3- Motif Mumlar</a>
     </div>
 
     <div id="main-content">
@@ -76,48 +65,30 @@
         </div>
     </div>
 
-    <footer style="padding: 40px 20px; text-align: center; color: #555; border-top: 1px solid #eee;">
-        <p style="max-width: 600px; margin: 0 auto; line-height: 1.6; font-size: 0.95rem;">
-            Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir. 
-        </p>
-        <p style="margin-top: 20px; font-weight: bold; color: #800020;">
-            İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera
-        </p>
-    </footer>
-
 <script>
-    let cart = 0;
-
-    function toggleNav() {
-        let nav = document.getElementById("sideNav");
-        nav.style.width = (nav.style.width === "280px") ? "0" : "280px";
-    }
-
-    function toggleSub(id) {
-        let el = document.getElementById(id);
-        el.style.display = (el.style.display === "block") ? "none" : "block";
-    }
+    function toggleNav() { let nav = document.getElementById("sideNav"); nav.style.width = (nav.style.width === "280px") ? "0" : "280px"; }
+    function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
 
     function showProducts(category) {
         const main = document.getElementById('main-content');
         main.innerHTML = ''; 
-
         let container = document.createElement('div');
         container.className = 'product-grid';
 
         if (category === 'recel') {
             const products = [
-                {name: "Strawberry Jam", old: "750 TL", price: "650 TL"},
-                {name: "Mandarin Jam", old: "750 TL", price: "650 TL"},
-                {name: "Lemon Jam", old: "750 TL", price: "650 TL"},
-                {name: "Raspberry Jam", old: "750 TL", price: "650 TL"},
-                {name: "Blueberry Jam", old: "750 TL", price: "650 TL"},
-                {name: "Jam Collection", old: "1200 TL", price: "1000 TL", collection: true}
+                {name: "Strawberry Jam", old: "750 TL", price: "650 TL", img: "Strawberry Jam.jfif"},
+                {name: "Mandarin Jam", old: "750 TL", price: "650 TL", img: "Mandarin Jam.jfif"},
+                {name: "Lemon Jam", old: "750 TL", price: "650 TL", img: "Lemon Jam.jfif"},
+                {name: "Raspberry Jam", old: "750 TL", price: "650 TL", img: "Raspberry Jam.jfif"},
+                {name: "Blueberry Jam", old: "750 TL", price: "650 TL", img: "Blueberry Jam.jfif"},
+                {name: "Jam Collection", old: "1200 TL", price: "1000 TL", collection: true, img: "Jam Collection.jfif"}
             ];
 
             products.forEach(p => {
                 container.innerHTML += `
                 <div class="product-card">
+                    <img src="${p.img}" alt="${p.name}">
                     <h3>${p.name}</h3>
                     <p class="old-price">${p.old}</p>
                     <p class="new-price">${p.price}</p>
@@ -129,38 +100,15 @@
         } else {
             container.innerHTML = `<h2 style="grid-column: span 2; text-align:center; padding: 50px;">Çok yakında sizlerle..</h2>`;
         }
-        
         main.appendChild(container);
         document.getElementById("sideNav").style.width = "0";
     }
 
     function openModal() { document.getElementById('collectionModal').style.display = 'block'; }
     function closeModal() { document.getElementById('collectionModal').style.display = 'none'; }
-
-    function addToCartFromModal() {
-        const choice = document.getElementById('jamSelect').value;
-        alert(choice + " sepete eklendi!");
-        closeModal();
-        updateCartCount();
-    }
-
-    function addToCart(btn) {
-        updateCartCount();
-        btn.innerText = "Eklendi";
-        setTimeout(() => { btn.innerText = "Sepete Ekle"; }, 2000);
-    }
-
-    function updateCartCount() {
-        cart++;
-        document.getElementById('cart-count').innerText = cart;
-    }
-
-    document.addEventListener('click', function(event) {
-        const nav = document.getElementById("sideNav");
-        const modal = document.getElementById('collectionModal');
-        if (!nav.contains(event.target) && !document.querySelector(".menu-btn").contains(event.target)) nav.style.width = "0";
-        if (event.target == modal) closeModal();
-    });
+    function addToCartFromModal() { alert("Seçiminiz sepete eklendi!"); closeModal(); updateCartCount(); }
+    function addToCart(btn) { updateCartCount(); btn.innerText = "Eklendi"; setTimeout(() => { btn.innerText = "Sepete Ekle"; }, 2000); }
+    function updateCartCount() { let count = parseInt(document.getElementById('cart-count').innerText) + 1; document.getElementById('cart-count').innerText = count; }
 </script>
 </body>
 </html>
