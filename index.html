@@ -8,7 +8,7 @@
         .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.85rem; }
         .header-wrapper { display: flex; justify-content: space-between; padding: 20px; align-items: center; border-bottom: 1px solid #eee; }
         .menu-btn { cursor: pointer; font-size: 28px; color: #800020; }
-        .logo { color: #800020; font-weight: bold; font-size: 1.5rem; } /* Bordo Logo */
+        .logo { color: #800020; font-weight: bold; font-size: 2.5rem; margin-bottom: 5px; } /* Büyük ve Bordo */
         
         .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
         .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; font-weight: bold; }
@@ -32,16 +32,16 @@
     <div id="toast">Sepetinize eklendi!</div>
     <div class="top-bar">1500 TL üzeri alışverişlerde kargo ücretsiz!</div>
     <div class="header-wrapper">
-        <div class="menu-btn" onclick="toggleNav()">☰</div>
+        <div class="menu-btn" onclick="toggleNav(event)">☰</div>
         <div onclick="showCart()" style="cursor:pointer; font-weight:bold;">Sepet (<span id="cart-count">0</span>)</div>
     </div>
 
     <div id="sideNav" class="side-nav">
         <a onclick="showHome()">Ana Sayfa</a>
-        <a onclick="toggleSub('menu1')">Bardak ve Kavanoz Mumlar</a>
+        <a onclick="toggleSub('menu1', event)">Bardak ve Kavanoz Mumlar</a>
         <div id="menu1" class="sub-menu">
             <a onclick="showProducts('bardak_mum')">Bardak Mumlar</a>
-            <a onclick="toggleSub('menu2')">Kavanoz Mumlar</a>
+            <a onclick="toggleSub('menu2', event)">Kavanoz Mumlar</a>
             <div id="menu2" class="sub-menu">
                 <a onclick="showProducts('recel')">Reçel Serisi</a>
                 <a onclick="showProducts('aromaterapi')">Aromaterapi Serisi</a>
@@ -74,18 +74,25 @@
     };
     let cart = [];
 
-    function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
-    function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
+    // Menü açma/kapama fonksiyonları
+    function toggleNav(event) { event.stopPropagation(); document.getElementById("sideNav").style.width = "280px"; }
+    function toggleSub(id, event) { event.stopPropagation(); let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
     
+    // Sayfanın herhangi bir yerine tıklandığında menüyü kapat
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById("sideNav");
+        if (nav.style.width === "280px" && !nav.contains(event.target)) {
+            nav.style.width = "0";
+            document.querySelectorAll('.sub-menu').forEach(el => el.style.display = 'none');
+        }
+    });
+
     function showHome() {
         document.getElementById('main-content').innerHTML = `<h1 class="logo">ATELIER BERA</h1><p>handmade candles</p>`;
         closeNav();
     }
 
-    function closeNav() { 
-        document.getElementById("sideNav").style.width = "0"; 
-        document.querySelectorAll('.sub-menu').forEach(el => el.style.display = 'none');
-    }
+    function closeNav() { document.getElementById("sideNav").style.width = "0"; }
 
     function showProducts(cat) {
         const main = document.getElementById('main-content');
@@ -103,7 +110,6 @@
                 </div>`;
             });
         }
-        closeNav();
     }
 
     function addToCart(event, id, cat) {
@@ -128,7 +134,6 @@
         });
         html += `<div class="cart-summary"><p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p><p>İndirimli Toplam: ${totalNew} TL</p><button class="btn-add" onclick="alert('Ödeme tamamlandı!')">Alışverişi Tamamla</button></div>`;
         document.getElementById('main-content').innerHTML = html;
-        closeNav();
     }
 
     function showDetail(id, cat) {
