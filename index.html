@@ -1,61 +1,24 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <style>
-        body { margin: 0; font-family: 'Georgia', serif; background-color: #fdfaf6; }
-        
-        /* Kırmızı Şerit */
-        .top-bar { background-color: #800020; color: white; text-align: center; padding: 15px 0; font-size: 0.9rem; }
-        
-        /* Hamburger ve Sepet - Aşağı çekildi */
-        .header-icons { display: flex; justify-content: space-between; padding: 20px 20px 0 20px; }
-        .menu-btn, .cart-btn { cursor: pointer; font-size: 20px; }
-        
-        /* Sol Menü Paneli */
+<div class="top-nav">
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
 </div>
-        .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background: #fdfaf6; overflow-x: hidden; transition: 0.3s; padding-top: 60px; z-index: 500; border-right: 1px solid #ddd; }
-        .side-nav a { padding: 10px 20px; text-decoration: none; font-size: 1.1rem; color: #333; display: block; cursor: pointer; }
-        
-        /* Alt Başlıklar */
-        .sub-menu { display: none; padding-left: 20px; font-size: 0.95rem; }
-        
-        /* Reçel Serisi Ürün Kartları */
-        .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 40px; }
-    </style>
-</head>
-<body>
 
-    <div class="top-bar">1500 TL üzeri alışverişlerinizde kargo ücretsiz!</div>
-    
-    <div class="header-icons">
-        <div class="menu-btn" onclick="toggleNav()">☰</div>
-        <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
-    </div>
-
-    <!-- Sol Panel -->
-</div>
-    <div id="sideNav" class="side-nav">
-        <a onclick="toggleSub('bardak-sub')">1- Bardak ve Kavanoz Mumlar</a>
-        <div id="bardak-sub" class="sub-menu">
-            <a onclick="alert('Bardak Mumlar')">Bardak Mumlar</a>
-            <a onclick="toggleSub('kavanoz-sub')">Kavanoz Mumlar</a>
-            <div id="kavanoz-sub" class="sub-menu">
-                <a onclick="alert('Reçel Serisi')">Reçel Serisi</a>
-                <a onclick="alert('Aromaterapi')">Aromaterapi Serisi</a>
-            </div>
+<div id="sideNav" class="side-nav">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <a href="#" onclick="toggleSub('bardak-sub')">1- Bardak ve Kavanoz Mumlar</a>
+    <div id="bardak-sub" class="sub-menu">
+        <a href="#">Bardak Mumlar</a>
+        <a href="#" onclick="toggleSub('kavanoz-sub')">Kavanoz Mumlar</a>
+        <div id="kavanoz-sub" class="sub-menu">
+            <a href="#">Reçel Serisi</a>
+            <a href="#">Aromaterapi Serisi</a>
         </div>
-        <a onclick="alert('Teneke')">2- Teneke Kutu Mumlar</a>
-        <a onclick="alert('Motif')">3- Motif Mumlar</a>
     </div>
+    <a href="#">2- Teneke Kutu Mumlar</a>
+    <a href="#">3- Motif Mumlar</a>
+</div>
 
-    <script>
-        function toggleNav() {
-            document.getElementById("sideNav").style.width = (document.getElementById("sideNav").style.width === "250px") ? "0" : "250px";
-        }
-        function toggleSub(id) {
-            let el = document.getElementById(id);
-            el.style.display = (el.style.display === "block") ? "none" : "block";
-        }
-    </script>
-</body>
-</html>
+<div class="hero-content">
+    <h1>ATELIER BERA</h1>
+    <p><i>handmade candles</i></p>
+</div>
