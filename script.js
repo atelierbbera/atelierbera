@@ -1,10 +1,18 @@
 function toggleMenu() {
-    const menu = document.getElementById('nav-menu');
-    menu.classList.toggle('active');
+    const nav = document.getElementById("sideNav");
+    nav.style.width = (nav.style.width === "250px") ? "0" : "250px";
 }
 
-function toggleSubmenu(id) {
+function toggleSub(id) {
     const sub = document.getElementById(id);
-    // Açık olanı kapat, kapalı olanı aç
     sub.style.display = (sub.style.display === "block") ? "none" : "block";
 }
+
+// Ana ekrana tıklayınca menüyü kapat
+document.addEventListener('click', function(event) {
+    const nav = document.getElementById("sideNav");
+    const menuBtn = document.querySelector(".menu-btn");
+    if (!nav.contains(event.target) && !menuBtn.contains(event.target)) {
+        nav.style.width = "0";
+    }
+});
