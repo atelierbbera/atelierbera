@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -7,84 +8,96 @@
         body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
         .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.9rem; }
         .header-wrapper { display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; }
-        .menu-btn, .cart-btn { cursor: pointer; font-size: 24px; color: #800020; }
-        .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; overflow-x: hidden; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; }
+        .menu-btn { cursor: pointer; font-size: 24px; color: #800020; }
+        
+        /* Yan menü ve içerik */
+        .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
         .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; }
+        
         #main-content { flex: 1; padding: 20px; text-align: center; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: 0 auto; }
         .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #fff; cursor: pointer; }
         .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
-        .btn-add { background: #800020; color: white; padding: 10px; border: none; width: 100%; margin-top: 10px; cursor: pointer; }
-        /* Detay Sayfası Stili */
-        .details-page { max-width: 500px; margin: 0 auto; text-align: center; }
-        .details-page img { width: 100%; border-radius: 10px; }
+        
+        .btn-add { background: #800020; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 10px; }
+        footer { padding: 40px 20px; text-align: center; color: #555; border-top: 1px solid #eee; background: #fdfaf6; }
     </style>
 </head>
 <body>
 
-<div class="top-bar">1500 TL üzeri alışverişlerinizde kargo ücretsiz!</div>
-<div class="header-wrapper">
-    <div class="menu-btn" onclick="toggleNav()">☰</div>
-    <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
-</div>
+    <div class="top-bar">1500 TL üzeri alışverişlerinizde kargo ücretsiz!</div>
+    <div class="header-wrapper">
+        <div class="menu-btn" onclick="toggleNav()">☰</div>
+        <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
+    </div>
 
-<div id="sideNav" class="side-nav">
-    <a onclick="showCategory('recel')">Reçel Serisi</a>
-</div>
+    <div id="sideNav" class="side-nav">
+        <a onclick="showProducts('recel')">Reçel Serisi</a>
+        <a onclick="showHome()">Ana Sayfa</a>
+    </div>
 
-<div id="main-content">
-    <div class="hero"><h1>ATELIER BERA</h1><p>handmade candles</p></div>
-</div>
+    <div id="main-content">
+        <div class="hero">
+            <h1>ATELIER BERA</h1>
+            <p>handmade candles</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir.</p>
+        <p style="font-weight: bold; color: #800020;">İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera</p>
+    </footer>
 
 <script>
-    const products = {
-        'recel': [
-            {id: 1, name: "Strawberry Jam", old: "750 TL", price: "650 TL", img: "Strawberry Jam.jfif"},
-            {id: 2, name: "Mandarin Jam", old: "750 TL", price: "650 TL", img: "Mandarin Jam.jfif"},
-            {id: 3, name: "Lemon Jam", old: "750 TL", price: "650 TL", img: "Lemon Jam.jfif"},
-            {id: 4, name: "Raspberry Jam", old: "750 TL", price: "650 TL", img: "Raspberry Jam.jfif"},
-            {id: 5, name: "Blueberry Jam", old: "750 TL", price: "650 TL", img: "Blueberry Jam.jfif"}
-        ]
-    };
-
-    let cartCount = 0;
+    const products = [
+        {id: 1, name: "Strawberry Jam", price: "650 TL", img: "Strawberry Jam.jfif"},
+        {id: 2, name: "Mandarin Jam", price: "650 TL", img: "Mandarin Jam.jfif"},
+        {id: 3, name: "Lemon Jam", price: "650 TL", img: "Lemon Jam.jfif"},
+        {id: 4, name: "Raspberry Jam", price: "650 TL", img: "Raspberry Jam.jfif"},
+        {id: 5, name: "Blueberry Jam", price: "650 TL", img: "Blueberry Jam.jfif"}
+    ];
 
     function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
+    
+    function showHome() {
+        document.getElementById('main-content').innerHTML = `<h1>ATELIER BERA</h1><p>handmade candles</p>`;
+        document.getElementById("sideNav").style.width = "0";
+    }
 
-    function showCategory(cat) {
+    function showProducts() {
         const main = document.getElementById('main-content');
         main.innerHTML = `<div class="product-grid"></div>`;
         const grid = main.querySelector('.product-grid');
-        products[cat].forEach(p => {
+        products.forEach(p => {
             grid.innerHTML += `
-            <div class="product-card" onclick="showDetails(${p.id}, '${cat}')">
+            <div class="product-card" onclick="showDetails(${p.id})">
                 <img src="${p.img}">
                 <h3>${p.name}</h3>
-                <p><s>${p.old}</s> <b>${p.price}</b></p>
+                <p><b>${p.price}</b></p>
             </div>`;
         });
         document.getElementById("sideNav").style.width = "0";
     }
 
-    function showDetails(id, cat) {
-        const p = products[cat].find(x => x.id === id);
-        const main = document.getElementById('main-content');
-        main.innerHTML = `
-        <div class="details-page">
-            <img src="${p.img}">
+    function showDetails(id) {
+        const p = products.find(x => x.id === id);
+        document.getElementById('main-content').innerHTML = `
+        <div style="max-width:400px; margin:auto;">
+            <img src="${p.img}" style="width:100%; border-radius:10px;">
             <h2>${p.name}</h2>
             <p>Fiyat: ${p.price}</p>
             <button class="btn-add" onclick="addToCart()">Sepete Ekle</button>
             <br><br>
-            <button onclick="showCategory('${cat}')">Geri Dön</button>
+            <button onclick="showProducts()">Geri Dön</button>
         </div>`;
     }
 
     function addToCart() {
-        cartCount++;
-        document.getElementById('cart-count').innerText = cartCount;
+        let count = parseInt(document.getElementById('cart-count').innerText) + 1;
+        document.getElementById('cart-count').innerText = count;
         alert("Ürün sepete eklendi!");
     }
 </script>
+
 </body>
 </html>
