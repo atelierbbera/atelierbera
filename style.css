@@ -1,19 +1,37 @@
-:root { --bordo: #7b241c; --gold: #c5a059; }
+<style>
+    /* Hamburger Menü Stilleri */
+    .menu-overlay {
+        display: none; /* Başlangıçta gizli */
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(253, 250, 246, 0.95);
+        z-index: 200;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .menu-overlay.active { display: flex; }
+    .menu-overlay ul { list-style: none; padding: 0; text-align: center; }
+    .menu-overlay li { margin: 20px 0; font-size: 1.5rem; cursor: pointer; color: #800020; }
+    .close-btn { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; }
+</style>
 
-/* Gold Şerit */
-.gold-top-bar { background: var(--gold); color: #fff; text-align: center; padding: 10px; font-weight: bold; }
+<!-- Hamburger İkonu -->
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-/* Başlık ve Alt Başlık */
-.logo-area { text-align: center; color: var(--bordo); }
-.logo-area h1 { margin-bottom: 5px; }
-.subtitle { margin-top: 0; }
+<!-- Hamburger Menü Ekranı -->
+<div id="nav-menu" class="menu-overlay">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <ul>
+        <li onclick="alert('Bardak ve Kavanozlar yakında...')">Bardak ve Kavanoz Mumlar</li>
+        <li onclick="alert('Teneke Kutu Mumlar yakında...')">Teneke Kutu Mumlar</li>
+        <li onclick="alert('Motif Mumlar yakında...')">Motif Mumlar</li>
+    </ul>
+</div>
 
-/* El Yazısı Gold */
-.hero-cursive { font-family: 'Dancing Script', cursive; color: var(--gold); font-size: 1.5rem; text-align: center; margin-top: 10px; }
-
-/* Sepet Sağda */
-.header-top { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-.cart-area { margin-left: auto; font-weight: bold; }
-
-/* Menü Linkleri */
-.side-menu a { color: var(--bordo); text-decoration: none; display: block; padding: 5px 0; }
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('nav-menu');
+        menu.classList.toggle('active');
+    }
+</script>
