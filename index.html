@@ -21,10 +21,14 @@
 
         /* Ürün Grid Yapısı */
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: 0 auto; }
-        .product-card { border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px; }
+        .product-card { border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px; background: #fff; }
         .old-price { text-decoration: line-through; color: #888; font-size: 0.8rem; }
         .new-price { color: #800020; font-weight: bold; font-size: 1.1rem; }
-        .btn-add { background: #800020; color: white; padding: 8px 15px; border: none; cursor: pointer; margin-top: 10px; }
+        .btn-add { background: #800020; color: white; padding: 8px 15px; border: none; cursor: pointer; margin-top: 10px; width: 100%; }
+
+        /* Modal Stili */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background: #fdfaf6; margin: 15% auto; padding: 25px; width: 90%; max-width: 350px; border-radius: 10px; text-align: center; }
     </style>
 </head>
 <body>
@@ -34,6 +38,21 @@
     <div class="header-wrapper">
         <div class="menu-btn" onclick="toggleNav()">☰</div>
         <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
+    </div>
+
+    <div id="collectionModal" class="modal">
+        <div class="modal-content">
+            <h3>Jam Collection</h3>
+            <p>Lütfen bir set seçin:</p>
+            <select id="jamSelect" style="width:100%; padding:10px; margin-bottom:20px;">
+                <option value="Set 1">1. Seçenek (Meyve Seti A)</option>
+                <option value="Set 2">2. Seçenek (Meyve Seti B)</option>
+                <option value="Set 3">3. Seçenek (Meyve Seti C)</option>
+                <option value="Set 4">4. Seçenek (Meyve Seti D)</option>
+            </select>
+            <button class="btn-add" onclick="closeModal()" style="background:#555;">İptal</button>
+            <button class="btn-add" onclick="addToCartFromModal()">Sepete Ekle</button>
+        </div>
     </div>
 
     <div id="sideNav" class="side-nav">
@@ -60,8 +79,6 @@
     <footer style="padding: 40px 20px; text-align: center; color: #555; border-top: 1px solid #eee;">
         <p style="max-width: 600px; margin: 0 auto; line-height: 1.6; font-size: 0.95rem;">
             Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir. 
-            Atelier Bera çatısı altında, geleneksel el işçiliğini modern ve sofistike bir tasarım anlayışıyla 
-            birleştirerek, evlerinize sıcaklık ve zarafet getirmeyi hedefliyoruz.
         </p>
         <p style="margin-top: 20px; font-weight: bold; color: #800020;">
             İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera
@@ -104,7 +121,7 @@
                     <h3>${p.name}</h3>
                     <p class="old-price">${p.old}</p>
                     <p class="new-price">${p.price}</p>
-                    <button class="btn-add" onclick="${p.collection ? 'openCollection()' : 'addToCart(this)'}">
+                    <button class="btn-add" onclick="${p.collection ? 'openModal()' : 'addToCart(this)'}">
                         ${p.collection ? 'Detay' : 'Sepete Ekle'}
                     </button>
                 </div>`;
@@ -117,25 +134,32 @@
         document.getElementById("sideNav").style.width = "0";
     }
 
-    function openCollection() {
-        alert("Jam Collection Seçenekleri:\n1. Seçenek\n2. Seçenek\n3. Seçenek\n4. Seçenek");
+    function openModal() { document.getElementById('collectionModal').style.display = 'block'; }
+    function closeModal() { document.getElementById('collectionModal').style.display = 'none'; }
+
+    function addToCartFromModal() {
+        const choice = document.getElementById('jamSelect').value;
+        alert(choice + " sepete eklendi!");
+        closeModal();
+        updateCartCount();
     }
 
     function addToCart(btn) {
+        updateCartCount();
+        btn.innerText = "Eklendi";
+        setTimeout(() => { btn.innerText = "Sepete Ekle"; }, 2000);
+    }
+
+    function updateCartCount() {
         cart++;
         document.getElementById('cart-count').innerText = cart;
-        btn.innerText = "Sepete Eklendi";
-        btn.style.backgroundColor = "#555";
-        setTimeout(() => {
-            btn.innerText = "Sepete Ekle";
-            btn.style.backgroundColor = "#800020";
-        }, 2000);
     }
 
     document.addEventListener('click', function(event) {
         const nav = document.getElementById("sideNav");
-        const menuBtn = document.querySelector(".menu-btn");
-        if (!nav.contains(event.target) && !menuBtn.contains(event.target)) nav.style.width = "0";
+        const modal = document.getElementById('collectionModal');
+        if (!nav.contains(event.target) && !document.querySelector(".menu-btn").contains(event.target)) nav.style.width = "0";
+        if (event.target == modal) closeModal();
     });
 </script>
 </body>
