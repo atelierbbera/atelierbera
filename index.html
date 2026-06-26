@@ -4,90 +4,62 @@
     <meta charset="UTF-8">
     <title>Atelier Bera</title>
     <style>
-        /* Tasarım Stilleri */
         body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; }
-        .top-bar { background-color: #800020; color: white; text-align: center; padding: 8px; font-size: 0.8rem; }
         
-        /* Navigasyon */
-        .menu-btn { position: fixed; top: 20px; left: 20px; cursor: pointer; z-index: 100; font-size: 24px; }
-        .cart-btn { position: fixed; top: 20px; right: 20px; cursor: pointer; }
-        
-        /* Ana Ekran */
-        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        h1 { color: #800020; font-size: 3rem; margin: 0; }
-        .subtitle { font-style: italic; color: #333; }
+        /* Kırmızı Şerit ve İkonlar */
+        .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.9rem; }
+        .header-wrapper { display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; }
+        .menu-btn, .cart-btn { cursor: pointer; font-size: 24px; color: #800020; }
 
-        /* Kategori Sayfası (Basit Gizli/Görünür) */
-        #categories { display: none; padding: 50px; text-align: center; }
+        /* Sol Menü Paneli */
+        .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; 
+                    overflow-x: hidden; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; }
+        .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; }
+        .sub-menu { display: none; padding-left: 20px; font-size: 0.9rem; }
 
-        /* Ürün Kartları (Reçel Serisi) */
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; }
-        .product-card { border: 1px solid #ddd; padding: 15px; text-align: center; }
-        .price { text-decoration: line-through; color: #888; }
-        .sale-price { color: #800020; font-weight: bold; }
-        
-        /* Footer */
-        footer { padding: 40px; text-align: center; background: #eee; font-size: 0.9rem; }
+        /* Hero Yazısı */
+        .hero { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        h1 { color: #800020; font-size: 4rem; margin: 0; }
+        .subtitle { font-style: italic; color: #333; font-size: 1.5rem; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">1500 TL üzeri alışverişlerinizde kargo ücretsiz!</div>
     
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
-
-    <!-- Menü -->
-    <div id="categories">
-        <h2>Kategoriler</h2>
-        <ul style="list-style: none;">
-            <li onclick="showPage('bardak')">Bardak ve Kavanoz Mumlar</li>
-            <li onclick="showPage('teneke')">Teneke Kutu Mumlar</li>
-            <li onclick="showPage('motif')">Motif Mumlar</li>
-        </ul>
+    <div class="header-wrapper">
+        <div class="menu-btn" onclick="toggleNav()">☰</div>
+        <div class="cart-btn">Sepet (<span id="cart-count">0</span>)</div>
     </div>
 
-    <!-- Hero -->
-    <div class="hero">
+    <div id="sideNav" class="side-nav">
+        <a onclick="toggleSub('bardak-sub')">1- Bardak ve Kavanoz Mumlar</a>
+        <div id="bardak-sub" class="sub-menu">
+            <a onclick="alert('Bardak Mumlar')">Bardak Mumlar</a>
+            <a onclick="toggleSub('kavanoz-sub')">Kavanoz Mumlar</a>
+            <div id="kavanoz-sub" class="sub-menu">
+                <a onclick="alert('Reçel Serisi')">Reçel Serisi</a>
+                <a onclick="alert('Aromaterapi Serisi')">Aromaterapi Serisi</a>
+            </div>
+        </div>
+        <a onclick="alert('Teneke')">2- Teneke Kutu Mumlar</a>
+        <a onclick="alert('Motif')">3- Motif Mumlar</a>
+    </div>
+
+    <div class="hero" onclick="closeNav()">
         <h1>ATELIER BERA</h1>
         <p class="subtitle">handmade candles</p>
     </div>
 
-    <!-- Ürün Bölümü Örneği (Reçel Serisi) -->
-    <div id="products" class="product-grid">
-        <div class="product-card">
-            <h3>Strawberry Jam</h3>
-            <p class="price">750 TL</p>
-            <p class="sale-price">650 TL</p>
-            <button onclick="addToCart(this)">Sepete Ekle</button>
-        </div>
-        <!-- Diğer ürünler buraya -->
-    </div>
-
-    <footer>
-        <p>Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir. Atelier Bera çatısı altında, geleneksel el işçiliğini modern ve sofistike bir tasarım anlayışıyla birleştirerek, evlerinize sıcaklık ve zarafet getirmeyi hedefliyoruz.</p>
-        <p>İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera</p>
-    </footer>
-
     <script>
-        let cart = 0;
-        function toggleMenu() { document.getElementById('categories').style.display = 'block'; }
-        
-        function showPage(type) {
-            alert(type + " ürünlerimiz yakında sizlerle..");
+        function toggleNav() {
+            let nav = document.getElementById("sideNav");
+            nav.style.width = (nav.style.width === "280px") ? "0" : "280px";
         }
-
-        function addToCart(btn) {
-            cart++;
-            document.getElementById('cart-count').innerText = cart;
-            btn.innerText = "Sepete Eklendi";
-            btn.style.backgroundColor = "#800020";
-            btn.style.color = "white";
-            setTimeout(() => {
-                btn.innerText = "Sepete Ekle";
-                btn.style.backgroundColor = "";
-                btn.style.color = "";
-            }, 2000);
+        function closeNav() { document.getElementById("sideNav").style.width = "0"; }
+        function toggleSub(id) {
+            let el = document.getElementById(id);
+            el.style.display = (el.style.display === "block") ? "none" : "block";
         }
     </script>
 </body>
