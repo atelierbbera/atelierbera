@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -10,9 +9,9 @@ HTML
         .header-wrapper { display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; }
         .menu-btn { cursor: pointer; font-size: 24px; color: #800020; }
         
-        /* Yan menü ve içerik */
         .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
-        .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; }
+        .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; font-weight: bold; }
+        .sub-menu { display: none; padding-left: 20px; font-weight: normal; }
         
         #main-content { flex: 1; padding: 20px; text-align: center; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: 0 auto; }
@@ -20,7 +19,7 @@ HTML
         .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
         
         .btn-add { background: #800020; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 10px; }
-        footer { padding: 40px 20px; text-align: center; color: #555; border-top: 1px solid #eee; background: #fdfaf6; }
+        footer { padding: 40px 20px; text-align: center; color: #555; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -32,8 +31,18 @@ HTML
     </div>
 
     <div id="sideNav" class="side-nav">
-        <a onclick="showProducts('recel')">Reçel Serisi</a>
         <a onclick="showHome()">Ana Sayfa</a>
+        <a onclick="toggleSub('menu1')">1- Bardak ve Kavanoz Mumlar</a>
+        <div id="menu1" class="sub-menu">
+            <a onclick="showProducts('bardak')">Bardak Mumlar</a>
+            <a onclick="toggleSub('menu1-1')">Kavanoz Mumlar</a>
+            <div id="menu1-1" class="sub-menu">
+                <a onclick="showProducts('recel')">Reçel Serisi</a>
+                <a onclick="showProducts('aromaterapi')">Aromaterapi Serisi</a>
+            </div>
+        </div>
+        <a onclick="showProducts('teneke')">2- Teneke Kutu Mumlar</a>
+        <a onclick="showProducts('dekoratif')">3- Dekoratif Mumlar</a>
     </div>
 
     <div id="main-content">
@@ -49,55 +58,52 @@ HTML
     </footer>
 
 <script>
-    const products = [
-        {id: 1, name: "Strawberry Jam", price: "650 TL", img: "Strawberry Jam.jfif"},
-        {id: 2, name: "Mandarin Jam", price: "650 TL", img: "Mandarin Jam.jfif"},
-        {id: 3, name: "Lemon Jam", price: "650 TL", img: "Lemon Jam.jfif"},
-        {id: 4, name: "Raspberry Jam", price: "650 TL", img: "Raspberry Jam.jfif"},
-        {id: 5, name: "Blueberry Jam", price: "650 TL", img: "Blueberry Jam.jfif"}
-    ];
+    const products = {
+        'recel': [
+            {id: 1, name: "Strawberry Jam", price: "650 TL", img: "Strawberry Jam.jfif"},
+            {id: 6, name: "Jam Collection", price: "1000 TL", img: "Jam Collection.jfif"}
+        ],
+        'aromaterapi': [], 'bardak': [], 'teneke': [], 'dekoratif': []
+    };
 
     function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
-    
+    function toggleSub(id) { 
+        let el = document.getElementById(id); 
+        el.style.display = (el.style.display === "block") ? "none" : "block"; 
+    }
+
+    // Dışarıya tıklayınca kapatma
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById("sideNav");
+        const btn = document.querySelector(".menu-btn");
+        if (!nav.contains(event.target) && !btn.contains(event.target)) {
+            nav.style.width = "0";
+        }
+    });
+
     function showHome() {
         document.getElementById('main-content').innerHTML = `<h1>ATELIER BERA</h1><p>handmade candles</p>`;
         document.getElementById("sideNav").style.width = "0";
     }
 
-    function showProducts() {
+    function showProducts(cat) {
         const main = document.getElementById('main-content');
-        main.innerHTML = `<div class="product-grid"></div>`;
-        const grid = main.querySelector('.product-grid');
-        products.forEach(p => {
-            grid.innerHTML += `
-            <div class="product-card" onclick="showDetails(${p.id})">
-                <img src="${p.img}">
-                <h3>${p.name}</h3>
-                <p><b>${p.price}</b></p>
-            </div>`;
-        });
+        if (!products[cat] || products[cat].length === 0) {
+            main.innerHTML = `<h2>Çok yakında sizlerle..</h2>`;
+        } else {
+            main.innerHTML = `<div class="product-grid"></div>`;
+            const grid = main.querySelector('.product-grid');
+            products[cat].forEach(p => {
+                grid.innerHTML += `
+                <div class="product-card" onclick="alert('Detay Sayfası')">
+                    <img src="${p.img}">
+                    <h3>${p.name}</h3>
+                    <p><b>${p.price}</b></p>
+                </div>`;
+            });
+        }
         document.getElementById("sideNav").style.width = "0";
     }
-
-    function showDetails(id) {
-        const p = products.find(x => x.id === id);
-        document.getElementById('main-content').innerHTML = `
-        <div style="max-width:400px; margin:auto;">
-            <img src="${p.img}" style="width:100%; border-radius:10px;">
-            <h2>${p.name}</h2>
-            <p>Fiyat: ${p.price}</p>
-            <button class="btn-add" onclick="addToCart()">Sepete Ekle</button>
-            <br><br>
-            <button onclick="showProducts()">Geri Dön</button>
-        </div>`;
-    }
-
-    function addToCart() {
-        let count = parseInt(document.getElementById('cart-count').innerText) + 1;
-        document.getElementById('cart-count').innerText = count;
-        alert("Ürün sepete eklendi!");
-    }
 </script>
-
 </body>
 </html>
