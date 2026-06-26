@@ -4,28 +4,25 @@
     <meta charset="UTF-8">
     <title>Atelier Bera</title>
     <style>
-        body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; }
+        body { font-family: 'Georgia', serif; margin: 0; background-color: #fdfaf6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
         .top-bar { background-color: #800020; color: white; text-align: center; padding: 10px 0; font-size: 0.85rem; }
         .header-wrapper { display: flex; justify-content: space-between; padding: 20px; align-items: center; border-bottom: 1px solid #eee; }
         .menu-btn { cursor: pointer; font-size: 28px; color: #800020; }
         
         .side-nav { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #fdfaf6; transition: 0.3s; padding-top: 80px; z-index: 1000; border-right: 1px solid #ddd; overflow-x: hidden; }
         .side-nav a { padding: 15px 25px; display: block; color: #333; text-decoration: none; cursor: pointer; font-weight: bold; }
-        .sub-menu { display: none; padding-left: 20px; font-weight: normal; font-size: 0.9rem; }
+        .sub-menu { display: none; padding-left: 30px; font-weight: normal; font-size: 0.9rem; }
         
-        #main-content { padding: 40px 20px; text-align: center; }
+        #main-content { flex: 1; padding: 40px 20px; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 800px; margin: auto; }
         .product-card { border: 1px solid #eee; padding: 8px; text-align: center; cursor: pointer; background: white; border-radius: 6px; }
         .product-card img { width: 100%; height: 120px; object-fit: contain; }
-        .old-price { text-decoration: line-through; color: #888; font-size: 0.8rem; }
+        .old-price { text-decoration: line-through; color: #888; font-size: 0.75rem; }
         .new-price { color: #800020; font-weight: bold; }
         .btn-add { background: #800020; color: white; border: none; padding: 8px; width: 100%; cursor: pointer; border-radius: 4px; }
         
-        .cart-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding: 15px; max-width: 600px; margin: auto; }
-        .cart-item img { width: 60px; height: 60px; object-fit: cover; }
-        .cart-summary { margin-top: 20px; font-weight: bold; }
-        
-        #toast { visibility: hidden; background: #333; color: #fff; text-align: center; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); border-radius: 5px; }
+        footer { padding: 30px 20px; text-align: center; color: #666; border-top: 1px solid #eee; font-size: 0.8rem; }
+        #toast { visibility: hidden; background: #333; color: #fff; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); border-radius: 5px; }
         #toast.show { visibility: visible; }
     </style>
 </head>
@@ -40,13 +37,17 @@
 
     <div id="sideNav" class="side-nav">
         <a onclick="showHome()">Ana Sayfa</a>
-        <a onclick="toggleSub('menu1')">1- Bardak ve Kavanoz Mumlar</a>
+        <a onclick="toggleSub('menu1')">Bardak ve Kavanoz Mumlar</a>
         <div id="menu1" class="sub-menu">
-            <a onclick="showProducts('recel')">Reçel Serisi</a>
-            <a onclick="showProducts('bardak_mum')">Bardak Mumları</a>
+            <a onclick="showProducts('bardak_mum')">Bardak Mumlar</a>
+            <a onclick="toggleSub('menu2')">Kavanoz Mumlar</a>
+            <div id="menu2" class="sub-menu">
+                <a onclick="showProducts('recel')">Reçel Serisi</a>
+                <a onclick="showProducts('aromaterapi')">Aromaterapi Serisi</a>
+            </div>
         </div>
-        <a onclick="showProducts('teneke')">2- Teneke Kutu Mumlar</a>
-        <a onclick="showProducts('dekoratif')">3- Dekoratif Mumlar</a>
+        <a onclick="showProducts('teneke')">Teneke Kutu Mumlar</a>
+        <a onclick="showProducts('dekoratif')">Dekoratif Mumlar</a>
     </div>
 
     <div id="main-content">
@@ -54,22 +55,30 @@
         <p>handmade candles</p>
     </div>
 
-<script>
-    const products = {
-        'recel': [
-            {id: 1, name: "Strawberry Jam", old: 800, price: 650, img: "Strawberry Jam.jfif"},
-            {id: 2, name: "Blueberry Jam", old: 800, price: 650, img: "Blueberry Jam.jfif"}
-        ]
-    };
+    <footer>
+        <p>Bizim için bir mum, sadece bir aydınlatma aracı değil; bir ambiyans, bir anı ve estetik bir değerdir.</p>
+        <p>İletişim: info.atelierbera@gmail.com | Instagram: @atelierbera</p>
+    </footer>
 
+<script>
+    const products = { 'recel': [ {id: 1, name: "Strawberry Jam", old: 800, price: 650, img: "Strawberry Jam.jfif"}, {id: 2, name: "Blueberry Jam", old: 800, price: 650, img: "Blueberry Jam.jfif"} ] };
     let cart = [];
 
     function toggleNav() { document.getElementById("sideNav").style.width = "280px"; }
     function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
+    
+    // Dışarı tıklayınca menüleri kapat
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById("sideNav");
+        const btn = document.querySelector(".menu-btn");
+        if (!nav.contains(event.target) && !btn.contains(event.target)) {
+            nav.style.width = "0";
+            document.querySelectorAll('.sub-menu').forEach(el => el.style.display = 'none');
+        }
+    });
 
     function showHome() {
         document.getElementById('main-content').innerHTML = `<h1>ATELIER BERA</h1><p>handmade candles</p>`;
-        document.getElementById("sideNav").style.width = "0";
     }
 
     function showProducts(cat) {
@@ -79,16 +88,15 @@
             main.innerHTML = `<div class="product-grid" id="grid"></div>`;
             products[cat].forEach(p => {
                 document.getElementById('grid').innerHTML += `
-                <div class="product-card" onclick="showDetail(${p.id}, '${cat}')">
-                    <img src="${p.img}">
-                    <h3>${p.name}</h3>
+                <div class="product-card">
+                    <img src="${p.img}" onclick="showDetail(${p.id}, '${cat}')">
+                    <h3 onclick="showDetail(${p.id}, '${cat}')">${p.name}</h3>
                     <p class="old-price">${p.old} TL</p>
                     <p class="new-price">${p.price} TL</p>
                     <button class="btn-add" onclick="addToCart(event, ${p.id}, '${cat}')">Sepete Ekle</button>
                 </div>`;
             });
         }
-        document.getElementById("sideNav").style.width = "0";
     }
 
     function addToCart(event, id, cat) {
@@ -109,21 +117,10 @@
         cart.forEach(item => {
             totalOld += item.old * item.qty;
             totalNew += item.price * item.qty;
-            html += `
-            <div class="cart-item">
-                <img src="${item.img}">
-                <span>${item.name} (x${item.qty})</span>
-                <span>${item.price * item.qty} TL</span>
-            </div>`;
+            html += `<div class="cart-item"><span>${item.name} (x${item.qty})</span><span>${item.price * item.qty} TL</span></div>`;
         });
-        html += `
-            <div class="cart-summary">
-                <p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p>
-                <p style="color:#800020;">İndirimli Toplam: ${totalNew} TL</p>
-                <button class="btn-add" onclick="alert('Ödeme sayfasına yönlendiriliyorsunuz...')">Alışverişi Tamamla</button>
-            </div>`;
+        html += `<div class="cart-summary"><p>Normal Toplam: <span class="old-price">${totalOld} TL</span></p><p>İndirimli Toplam: ${totalNew} TL</p><button class="btn-add" onclick="alert('Ödeme sayfasına yönlendiriliyorsunuz...')">Alışverişi Tamamla</button></div>`;
         document.getElementById('main-content').innerHTML = html;
-        document.getElementById("sideNav").style.width = "0";
     }
 
     function showDetail(id, cat) {
